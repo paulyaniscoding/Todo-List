@@ -37,3 +37,43 @@
     transform: translateY(0px);
   }
 }
+
+
+/*****************************************************/
+
+li.todo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  height: 50px;
+  padding: 10px 10px 10px 10px;
+  /*background-color: #151515;*/
+}
+
+li.todo>div {
+  border-bottom:1px solid rgb(112, 76, 182);
+  padding: 0px 10px 0px 10px;
+  background-color: white;
+}
+
+/*
+li.todo>div.todoId {
+  flex: 0.5 1 10px;
+}
+
+li.todo>div.todoTitle {
+  flex: 3 1 10px;
+}
+
+li.todo>div.todoCategory {
+  flex: 1 1 10px;
+}
+
+li.todo>div.todoStartDate {
+  flex: 1 1 10px;
+}
+*/
+
+
+/******************************************************************************************/
