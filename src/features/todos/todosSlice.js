@@ -1,9 +1,12 @@
 import { 
     createEntityAdapter, 
     createSlice, 
-    createAsyncThunk, 
-    createSelector 
+    createAsyncThunk,
+    createSelector,
+    nanoid
 } from '@reduxjs/toolkit'
+import { act } from 'react-dom/test-utils';
+
 import { getTodosDemo } from '../utility/todosDemo'
 
 //import { sub } from 'date-fns'
@@ -30,7 +33,26 @@ const todosSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        
+        addTodo: {
+            reducer: todosAdapter.addOne,
+            prepare(category, title, content, requiredTime) {
+                return {
+                    payload: {
+                        id: nanoid(),
+                        category,
+                        title,
+                        content,
+
+                        recordingTime: new Date().toISOString(),
+                        expectedRequiredTime: requiredTime,
+                        startTime: null,
+                        endTime: null,
+
+                        status: 'notStarted',
+                    }
+                }
+            }
+        },
 
         // postAdded: {
         //     reducer(state, action) {
@@ -75,7 +97,7 @@ const todosSlice = createSlice({
     }
 })
 
-export const { postAdded, postUpdated, postDeleted, reactionAdded } = todosSlice.actions
+export const { addTodo, postUpdated, postDeleted, reactionAdded } = todosSlice.actions
 
 export default todosSlice.reducer;
 

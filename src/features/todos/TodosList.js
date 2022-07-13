@@ -7,10 +7,10 @@ import {
     selectAllTodos,
     fetchTodos,
     selectTodoIds,
-    selectTodoById
+    selectTodoById,
 } from './todosSlice'
 
-const Todo = ({ todoId }) => {
+const TodoItem = ({ todoId }) => {
     const todo = useSelector( state => selectTodoById(state, todoId) )
 
     const formatedTime = (time) => {
@@ -22,30 +22,69 @@ const Todo = ({ todoId }) => {
     }
 
     return (
-        <li className="todo" key={todoId}>
-            <div className='todoId'>{todoId}</div>
-            <div className='todoCategory'>{todo.category}</div>
-            <div className='todoTitle'>{todo.title}</div>
-            <div className='todoContent'>{todo.content}</div>
+        <div className="todo-item" key={todoId}>
+            <div className='todo-id'>{todoId}</div>
+            <div className='todo-category'>{todo.category}</div>
+            <div className='todo-title'>{todo.title}</div>
+            <div className='todo-content'>{todo.content}</div>
 
-            <div className='todorRecordingTime'>{formatedTime(todo.recordingTime)}</div>
-            <div className='todoExpectedRequiredTime'>{`${todo.expectedRequiredTime} hours`}</div>
-            <div className='todoStartTime'>{formatedTime(todo.startTime)}</div>
-            <div className='todoEndTime'>{formatedTime(todo.endTime)}</div>
-            <div className='todoStatus'>{todo.status}</div>
-        </li>
+            <div className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</div>
+            <div className='todo-expectedRequiredTime'>{`${(todo.expectedRequiredTime)} hours`}</div>
+            <div className='todo-startTime'>{formatedTime(todo.startTime)}</div>
+            <div className='todo-endTime'>{formatedTime(todo.endTime)}</div>
+            <div className='todo-status'>{todo.status}</div>
+            <button>Start</button>
+            <button>Finish</button>
+        </div>
     )
 }
 
-export const TodosList = () => {
-    const todoIds = useSelector(selectTodoIds)
-    let content;
-    content = todoIds.map(todoId=>(
-        <Todo todoId={todoId} key={todoId} />
-    ))
+const SubList = ({ listTitle, listIds }) => {
+    console.log('listIds', listIds);
+    let listContent = listIds.map(itemId => (<TodoItem todoId={itemId} key={itemId} />) )
     return (
-        <ul>
+        <div style={{ margin: '10px 0', padding: '0 0 10px 0', borderBottom: '1px solid black' }} key={listTitle}>
+            <div>{listTitle}</div>
+            <div>
+                {listContent}
+            </div>
+        </div>
+    );
+}
+
+export const TodosList = () => {
+    const todoItems = useSelector(selectAllTodos)
+
+    const getSublists = (todoItems, sublistType) => {
+        let sublists = {};
+        if ( sublistType === 'category' ) {
+
+            todoItems.forEach((item) => {
+                if (!(sublists.hasOwnProperty(item[sublistType]))) {
+                    sublists[item[sublistType]] = [item.id]
+                } else {
+                    sublists[item[sublistType]].push(item.id);
+                }
+            })
+        } 
+        //else if () {
+//
+        //}
+        return sublists;
+    }
+
+    let content;
+    let sublistType = 'category';
+    let sublists = getSublists(todoItems, sublistType);
+    console.log(sublists);
+    console.log('Object.entries(sublists)', Object.entries(sublists))
+    content = Object.entries(sublists).map(([ sublistTitle, sublistIds ]) => {
+        return (<SubList listTitle={sublistTitle} listIds={sublistIds} key={sublistTitle}/>)
+    } );
+    return (
+        <section className="todo-list" >
+            <h2>Todo List</h2>
             {content}
-        </ul>
+        </section>
     )
 }
