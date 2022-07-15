@@ -48,11 +48,18 @@ const todosSlice = createSlice({
                         startTime: null,
                         endTime: null,
 
+                        lastStartTimestamp: null,
+                        lastEndTimestamp: null,
+                        timeUsed: null,
+
                         status: 'notStarted',
                     }
                 }
             }
         },
+        startTodo: todosAdapter.upsertOne,
+        pauseTodo: todosAdapter.upsertOne,
+        endTodo: todosAdapter.upsertOne,
 
         // postAdded: {
         //     reducer(state, action) {
@@ -97,13 +104,14 @@ const todosSlice = createSlice({
     }
 })
 
-export const { addTodo, postUpdated, postDeleted, reactionAdded } = todosSlice.actions
+export const { addTodo, startTodo, pauseTodo, endTodo, postUpdated, postDeleted, reactionAdded } = todosSlice.actions
 
 export default todosSlice.reducer;
 
 // Export the customized selectors for this adapter using `getSelectors`
 export const {
     selectAll: selectAllTodos,
+    selectEntities: selectTodoEntities,
     selectById: selectTodoById,
     selectIds: selectTodoIds
     // Pass in a selector that returns the todos slice of state

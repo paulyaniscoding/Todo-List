@@ -31,6 +31,10 @@ const todoDemos = [
         startTime: null,
         endTime: null,
 
+        lastStartTimestamp: null,
+        lastEndTimestamp: null,
+        timeUsed: null,
+
         status: 'notStarted',
         //dependsOn: [],
         //dependedBy: ['2']
@@ -46,6 +50,10 @@ const todoDemos = [
         startTime: null,
         endTime: null,
 
+        lastStartTimestamp: null,
+        lastEndTimestamp: null,
+        timeUsed: null,
+
         status: 'notStarted',
         //dependsOn: [],
         //dependedBy: ['2']
@@ -60,6 +68,10 @@ const todoDemos = [
         expectedRequiredTime: '20',
         startTime: null,
         endTime: null,
+
+        lastStartTimestamp: null,
+        lastEndTimestamp: null,
+        timeUsed: null,
 
         status: 'notStarted',
         //dependsOn: [],
