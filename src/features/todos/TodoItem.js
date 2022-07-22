@@ -111,22 +111,40 @@ export const TodoItem = ({ todoId }) => {
         return timeUsedString;
     }
 
+
+
     return (
         <div className="todo-item" key={todoId}>
-            <div className='todo-id'>{todoId}</div>
-            <div className='todo-category'>{todo.category}</div>
-            <div className='todo-title'>{todo.title}</div>
-            <div className='todo-content'>{todo.content}</div>
+            <div className='todo-id'></div>
+            <div className='todo-category'><b>Category:</b> {todo.category}</div>
+            <div className='todo-title'>{`${todoId}. `}{todo.title}</div>
 
-            <div className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</div>
-            <div className='todo-expectedRequiredTime'>{`${(todo.expectedRequiredTime)} hours`}</div>
-            <div className='todo-startTime'>{formatedTime(todo.startTime)}</div>
-            <div className='todo-endTime'>{formatedTime(todo.endTime)}</div>
-            <div className='todo-time-used'>{getTimeUsed(todoId)}</div>
-            <div className='todo-status'>{todo.status}</div>
-            <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>
-            <button onClick={(e) => onPauseClicked(e, todoId)}>Pause</button>
-            <button onClick={(e) => onEndClicked(e, todoId)}>Finish</button>
+            <div>
+                <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>
+                <button onClick={(e) => onPauseClicked(e, todoId)}>Pause</button>
+                <button onClick={(e) => onEndClicked(e, todoId)}>Finish</button>
+                <span className='todo-status'>{todo.status}{', '}</span>
+                <span className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</span>
+            </div>
         </div>
     )
+
+    //return (
+    //    <div className="todo-item" key={todoId}>
+    //        <div className='todo-id'>{todoId}</div>
+    //        <div className='todo-category'>{todo.category}</div>
+    //        <div className='todo-title'>{todo.title}</div>
+    //        <div className='todo-content'>{todo.content}</div>
+//
+    //        <div className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</div>
+    //        <div className='todo-expectedRequiredTime'>{`${(todo.expectedRequiredTime)} hours`}</div>
+    //        <div className='todo-startTime'>{formatedTime(todo.startTime)}</div>
+    //        <div className='todo-endTime'>{formatedTime(todo.endTime)}</div>
+    //        <div className='todo-time-used'>{getTimeUsed(todoId)}</div>
+    //        <div className='todo-status'>{todo.status}</div>
+    //        <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>
+    //        <button onClick={(e) => onPauseClicked(e, todoId)}>Pause</button>
+    //        <button onClick={(e) => onEndClicked(e, todoId)}>Finish</button>
+    //    </div>
+    //)
 }
