@@ -1,7 +1,7 @@
 import React from "react";
 
-export function Collapsible(props) {
-    const [isCollapsed, setIsCollapsed] = React.useState(props.collapsed);
+export function Collapsible({ collapsed, children }) {
+    const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
 
     const style = {
         collapsed: {
@@ -31,7 +31,7 @@ export function Collapsible(props) {
                 // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
                 aria-expanded={isCollapsed}
             >
-                {props.children}
+                {children}
             </div>
         </div>
     );
