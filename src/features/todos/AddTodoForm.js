@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addTodo } from './todosSlice'
+import { 
+    selectAllTodos,
+    addTodo 
+} from './todosSlice'
 
 
 //import { selectAllUsers, selectUserById } from '../users/usersSlice'
 
-export const AddtodoForm = () => {
-    const [category, setCategory] = useState('')
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
-    const [requiredTime, setRequiredTime] = useState('')
-    const [addRequestStatus, setAddRequestStatus] = useState('idle')
+export const AddtodoForm = ({parentId}) => {
+    // React State
+    const [category, setCategory] = useState('');
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [requiredTime, setRequiredTime] = useState('');
+    const [addRequestStatus, setAddRequestStatus] = useState('idle');
 
-    const dispatch = useDispatch()
+    // Redux State and Dispatch
+    const allTodos = useSelector(selectAllTodos);
+    const dispatch = useDispatch();
 
-    //const users = useSelector(selectAllUsers)
-
+    // Event Handlers
     const onCategoryChanged = e => setCategory(e.target.value)
     const onTitleChanged = e => setTitle(e.target.value)
     const onContentChanged = e => setContent(e.target.value)
@@ -24,18 +29,14 @@ export const AddtodoForm = () => {
 
     // TODO: 要check
     const canSave =
-        [title, content, requiredTime/*, userId*/].every(Boolean) && addRequestStatus === 'idle'
-
+        [category, title, content, requiredTime].every(Boolean) && addRequestStatus === 'idle'
     const onSaveTodoClicked = async () => {
         if (canSave) {
-       
-            
-
-            dispatch(addTodo(category, title, content, requiredTime))
-            setCategory('')
-            setTitle('')
-            setContent('')
-            setRequiredTime('')           
+            dispatch(addTodo(category, title, content, requiredTime, parentId));
+            setCategory('');
+            setTitle('');
+            setContent('');
+            setRequiredTime('');
         }
 
         /*
@@ -55,13 +56,13 @@ export const AddtodoForm = () => {
         */
     }
 
-    /*
-    const usersOptions = users.map(user => (
-        <option key={user.id} value={user.id}>
-            {user.name}
+    let todoCategories = [...new Set(allTodos.filter(itm => itm.category).map(item => item.category))];
+    const todoCategoryOptions = todoCategories.map(category => (
+        <option key={category} value={category}>
+            {category}
         </option>
-    ))
-    */
+    ));
+
 
     return (
         <section>
@@ -69,13 +70,11 @@ export const AddtodoForm = () => {
             <form>
                 <div>
                     <label htmlFor="todoCategory">Category:</label>
-                    <input
-                        type="text"
-                        id="todoCategory"
-                        name="todoCategory"
-                        value={category}
-                        onChange={onCategoryChanged}
-                    />
+                    <input type="text" list="todoCategory" value={category} onChange={onCategoryChanged}/>
+                    <datalist id="todoCategory">
+                        {todoCategoryOptions}
+                    </datalist>
+                    
                 </div>
                 <div>
                     <label htmlFor="todoTitle">Title:</label>

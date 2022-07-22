@@ -7,23 +7,39 @@ import {
 } from '@reduxjs/toolkit'
 import { act } from 'react-dom/test-utils';
 
-import { getTodosDemo } from '../utility/todosDemo'
+import { getTodosDemo } from '../utility/DemoData/todosDemoData'
 
 //import { sub } from 'date-fns'
 
-const todosAdapter = createEntityAdapter({
-    sortComparer: (a, b) => {
-        if ( a.startTime && b.startTime ){
-            return b.startTime.localeCompare(a.startTime)
-        } else if ( a.startTime && !b.startTime ){
+const todosAdapter = createEntityAdapter(
+    // {
+    //     sortComparer: (a, b) => {
+    //         if (a.id && b.id) {
+    //             return b.id.localeCompare(a.id)
+    //         } else if (a.id && !b.id) {
+    //             return -1;
+    //         } else if (!a.id && b.id) {
+    //             return 1;
+    //         } else {
+    //             return 1;
+    //         }
+    //     }
+    // },
+    {
+        sortComparer: (a, b) => {
+        if (a.category && b.category ){
+            return b.category.localeCompare(a.category)
+        } else if ( a.category && !b.category ){
             return -1;
-        } else if ( !a.startTime && b.startTime){
+        } else if ( !a.category && b.category){
             return 1;
         } else {
             return 1;
         }
+        },
     }
-})
+)
+
 
 let initialState = todosAdapter.getInitialState()
 
@@ -34,14 +50,26 @@ const todosSlice = createSlice({
     initialState,
     reducers: {
         addTodo: {
-            reducer: todosAdapter.addOne,
-            prepare(category, title, content, requiredTime) {
+            reducer(state, action) { 
+                state.entities[action.payload.parent].children = [
+                    ...state.entities[action.payload.parent].children,
+                    action.payload.id
+                ];
+
+                //todosAdapter.addOne(state, action.payload);
+                state.ids = [...state.ids, action.payload.id];
+                state.entities[action.payload.id] = action.payload;
+            },
+            prepare(category, title, content, requiredTime, parentId) {
                 return {
                     payload: {
                         id: nanoid(),
                         category,
                         title,
                         content,
+
+                        parent: parentId,
+                        children: [],
 
                         recordingTime: new Date().toISOString(),
                         expectedRequiredTime: requiredTime,
