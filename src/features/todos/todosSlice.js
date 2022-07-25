@@ -57,6 +57,8 @@ const todosSlice = createSlice({
     reducers: {
         addTodo: {
             reducer(state, action) { 
+                let prevTodoNum = state.ids.length;
+                console.log('prevTodoNum', prevTodoNum)
                 state.entities[action.payload.parent].children = [
                     ...state.entities[action.payload.parent].children,
                     action.payload.id
@@ -64,7 +66,16 @@ const todosSlice = createSlice({
 
                 //todosAdapter.addOne(state, action.payload);
                 state.ids = [...state.ids, action.payload.id];
-                state.entities[action.payload.id] = action.payload;
+                state.entities[action.payload.id] = {
+                    ...action.payload,
+                    priority: prevTodoNum,
+                };
+                if (action.payload.parent!=='root'){
+                    state.entities[action.payload.id] = {
+                        ...state.entities[action.payload.id],
+                        category: state.entities[action.payload.id].category,
+                    }; 
+                }
             },
             prepare(category, title, content, requiredTime, parentId) {
                 return {
@@ -95,37 +106,17 @@ const todosSlice = createSlice({
         pauseTodo: todosAdapter.upsertOne,
         endTodo: todosAdapter.upsertOne,
         changePriority: (state, action) => {
-
-
             // slow version
             let [dragIndex, hoverIndex] = action.payload;
             let dragId = state.ids[dragIndex];
             let priorityList = state.ids.slice();
 
-            console.log('priorityList:');
-            for (const itm of priorityList) {
-                console.log('itm:', itm)
-            }
-
-
             priorityList.splice(dragIndex, 1);
             priorityList.splice(hoverIndex, 0, dragId);
 
-
-            console.log(`from ${dragIndex} to ${hoverIndex}`);
-            console.log('priorityList:');
-            for (const itm of priorityList){
-                console.log('itm:', itm)
-            }
-
-
             let priorityObj = priorityList.map((id, priority)=>{
                 return { id: id, priority: priority };
-                //return [id, {id, priority}];
             })
-            //let priorityEntities = Object.fromEntries(priorityObj)
-            console.log('priorityObj:', priorityObj)
-            console.log('state.entities:', state.entities[dragId])
             todosAdapter.upsertMany(state, priorityObj);
         },
 

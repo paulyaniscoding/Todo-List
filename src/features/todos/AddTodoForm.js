@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { 
     selectAllTodos,
-    addTodo 
+    addTodo, 
+    selectTodoEntities
 } from './todosSlice'
 
 
 //import { selectAllUsers, selectUserById } from '../users/usersSlice'
 
-export const AddtodoForm = ({parentId}) => {
+export const AddtodoForm = ({ parentId }) => {
+    // Redux State and Dispatch
+    const allTodos = useSelector(selectAllTodos);
+    const todosEntities = useSelector(selectTodoEntities);
+    const dispatch = useDispatch();
+
     // React State
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
@@ -17,9 +23,6 @@ export const AddtodoForm = ({parentId}) => {
     const [requiredTime, setRequiredTime] = useState('');
     const [addRequestStatus, setAddRequestStatus] = useState('idle');
 
-    // Redux State and Dispatch
-    const allTodos = useSelector(selectAllTodos);
-    const dispatch = useDispatch();
 
     // Event Handlers
     const onCategoryChanged = e => setCategory(e.target.value)
@@ -27,12 +30,16 @@ export const AddtodoForm = ({parentId}) => {
     const onContentChanged = e => setContent(e.target.value)
     const onRequiredTimeChanged = e => setRequiredTime(e.target.value)
 
+
+    const isRootTasks = parentId !== 'root';
+    let adjustedCategory = isRootTasks ? todosEntities[parentId].category : category;
     // TODO: 要check
     const canSave =
-        [category, title, content, requiredTime].every(Boolean) && addRequestStatus === 'idle'
+        [adjustedCategory, title, content, requiredTime].every(Boolean) && addRequestStatus === 'idle'
     const onSaveTodoClicked = async () => {
         if (canSave) {
-            dispatch(addTodo(category, title, content, requiredTime, parentId));
+
+            dispatch(addTodo(adjustedCategory, title, content, requiredTime, parentId));
             setCategory('');
             setTitle('');
             setContent('');
@@ -69,11 +76,17 @@ export const AddtodoForm = ({parentId}) => {
             <h2>Add Todo</h2>
             <form>
                 <div>
-                    <label htmlFor="todoCategory">Category:</label>
-                    <input type="text" list="todoCategory" value={category} onChange={onCategoryChanged}/>
-                    <datalist id="todoCategory">
-                        {todoCategoryOptions}
-                    </datalist>
+                    <label htmlFor="todoCategory">Category: </label>
+                    {!isRootTasks ? (
+                        <>
+                            <input type="text" list="todoCategory" value={category} onChange={onCategoryChanged}/>
+                            <datalist id="todoCategory">
+                                {todoCategoryOptions}
+                            </datalist>
+                        </>
+                    ) : (
+                            <span>{todosEntities[parentId].category}</span>
+                    )}
                     
                 </div>
                 <div>

@@ -38,7 +38,6 @@ export const TodosDemo = () => {
     let dispatch = useDispatch();
 
     let dragTodoHandler = (dragIndex, hoverIndex) => {
-        //console.log(`from ${dragIndex} to ${hoverIndex}`)
         dispatch(changePriority([dragIndex, hoverIndex]))
     }
     

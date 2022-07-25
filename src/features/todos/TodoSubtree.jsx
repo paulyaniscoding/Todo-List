@@ -28,6 +28,7 @@ import {
     pauseTodo,
     endTodo,
 } from './todosSlice'
+import { AddtodoForm } from './AddTodoForm'
 
 // TodoEntities 要加 children field
 export const TodoSubtree = ({ itmId, onDragTodo }) => {
@@ -35,7 +36,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
     let todoIds = useSelector(selectTodoIds)
 
     let subtree = '';
-    if (todosEntities[itmId]?.children) {
+    if (true){//(todosEntities[itmId]?.children) {
         subtree = (
             <Collapsible>
                 {todoIds.filter(id => todosEntities[itmId].children.includes(id) ).map(
@@ -47,6 +48,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
                         />
                     )
                 )}
+                <AddtodoForm parentId={itmId}/>
             </Collapsible>
         )
     };
