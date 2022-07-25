@@ -12,32 +12,34 @@ import { getTodosDemo } from '../utility/DemoData/todosDemoData'
 //import { sub } from 'date-fns'
 
 const todosAdapter = createEntityAdapter(
-    // {
-    //     sortComparer: (a, b) => {
-    //         if (a.id && b.id) {
-    //             return b.id.localeCompare(a.id)
-    //         } else if (a.id && !b.id) {
-    //             return -1;
-    //         } else if (!a.id && b.id) {
-    //             return 1;
-    //         } else {
-    //             return 1;
-    //         }
-    //     }
-    // },
     {
+        // TODO: 要check check
         sortComparer: (a, b) => {
-        if (a.category && b.category ){
-            return b.category.localeCompare(a.category)
-        } else if ( a.category && !b.category ){
-            return -1;
-        } else if ( !a.category && b.category){
-            return 1;
-        } else {
-            return 1;
-        }
+            if (a.priority && b.priority) {
+                return b.priority >= a.priority;
+            } else if (a.priority && !b.priority) {
+                return -1;
+            } else if (!a.priority && b.priority) {
+                return 1;
+            } else {
+                return 1;
+            }
         },
     }
+
+    //{
+    //    sortComparer: (a, b) => {
+    //    if (a.category && b.category ){
+    //        return b.category.localeCompare(a.category)
+    //    } else if ( a.category && !b.category ){
+    //        return -1;
+    //    } else if ( !a.category && b.category){
+    //        return 1;
+    //    } else {
+    //        return 1;
+    //    }
+    //    },
+    //}
 )
 
 

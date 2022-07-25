@@ -22,10 +22,12 @@
 const todoDemos = [
     {
         id: 'root',
+        priority: 0,
         children: ['1', '2', '3',],
     },
     {
         id: '1',
+        priority: 1,
         category: 'JS Syntax',
         title: '睇 js class',
         content: '睇 js class',
@@ -48,6 +50,7 @@ const todoDemos = [
     },
     {
         id: '11',
+        priority: 2,
         category: 'JS Syntax',
         title: '睇 js prototype',
         content: '睇 js prototype',
@@ -70,6 +73,7 @@ const todoDemos = [
     },
     {
         id: '12',
+        priority: 3,
         category: 'JS Syntax',
         title: '睇 js Object Literal',
         content: '睇 js Object Literal',
@@ -92,6 +96,7 @@ const todoDemos = [
     },
     {
         id: '2',
+        priority: 4,
         category: 'Redux',
         title: '補睇redux 官網tutorial 前兩篇',
         content: '補睇redux 官網tutorial 前兩篇',
@@ -114,6 +119,7 @@ const todoDemos = [
     },
     {
         id: '3',
+        priority: 5,
         category: 'Git',
         title: '睇git, 整github, 唔洗睇得太齊, 夠開proj, 存到檔就得',
         content: '睇git, 整github, 唔洗睇得太齊, 夠開proj, 存到檔就得',
