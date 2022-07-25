@@ -1,10 +1,23 @@
 import { useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import {
     useDrag,
     useDrop
 } from 'react-dnd'
 
 import { ItemTypes } from './ItemTypes'
+
+import {
+    selectAllTodos,
+    selectTodoEntities,
+    fetchTodos,
+    selectTodoIds,
+    selectTodoById,
+
+    startTodo,
+    pauseTodo,
+    endTodo,
+} from '../../todos/todosSlice'
 
 const style = {
     border: '1px dashed gray',
@@ -14,8 +27,12 @@ const style = {
     cursor: 'move',
 }
 
-export const SortableItem = ({ id, index, itemParent, moveItem, children }) => {
+export const SortableItem = ({ id, itemParent, moveItem, children }) => {
     const ref = useRef(null)
+    let todosEntities = useSelector(selectTodoEntities);
+    let todoIds = useSelector(selectTodoIds);
+    let priority = todosEntities[id].priority;
+
     const [{ handlerId }, drop] = useDrop({
         accept: `${ItemTypes.TODO}-${itemParent}`,
         collect(monitor) {
@@ -27,8 +44,8 @@ export const SortableItem = ({ id, index, itemParent, moveItem, children }) => {
             if (!ref.current) {
                 return
             }
-            const dragIndex = item.index
-            const hoverIndex = index
+            const dragIndex = item.priority
+            const hoverIndex = priority
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return
@@ -59,13 +76,13 @@ export const SortableItem = ({ id, index, itemParent, moveItem, children }) => {
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
             // to avoid expensive index searches.
-            item.index = hoverIndex
+            item.priority = hoverIndex
         },
     })
     const [{ isDragging }, drag] = useDrag({
         type: `${ItemTypes.TODO}-${itemParent}`,
         item: () => {
-            return { id, index }
+            return { id, priority }
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -75,6 +92,7 @@ export const SortableItem = ({ id, index, itemParent, moveItem, children }) => {
     drag(drop(ref))
     return (
         <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+            {console.log('todoIds', todoIds)}
             {children}
         </div>
     )

@@ -30,19 +30,18 @@ import {
 } from './todosSlice'
 
 // TodoEntities 要加 children field
-export const TodoSubtree = ({ itmId, todoIndex, todoIndexObj, onDragTodo }) => {
+export const TodoSubtree = ({ itmId, onDragTodo }) => {
     let todosEntities = useSelector(selectTodoEntities);
+    let todoIds = useSelector(selectTodoIds)
 
     let subtree = '';
     if (todosEntities[itmId]?.children) {
         subtree = (
             <Collapsible>
-                {todoIndex.filter(id => todosEntities[itmId].children.includes(id) ).map(
+                {todoIds.filter(id => todosEntities[itmId].children.includes(id) ).map(
                     (childId) => (
                         <TodoSubtree
                             itmId={childId}
-                            todoIndex={todoIndex}
-                            todoIndexObj={todoIndexObj}
                             onDragTodo={onDragTodo}
                             key={childId}
                         />
@@ -54,7 +53,7 @@ export const TodoSubtree = ({ itmId, todoIndex, todoIndexObj, onDragTodo }) => {
 
     let itemParent = todosEntities[itmId].parent
     return (
-        <SortableItem id={itmId} index={todoIndexObj[itmId]} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
+        <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
             <TodoItem todoId={itmId} />
             {subtree}
         </SortableItem>

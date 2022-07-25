@@ -29,37 +29,23 @@ import {
     startTodo,
     pauseTodo,
     endTodo,
+    changePriority,
 } from './todosSlice'
-
-const useTodoIndex = (todoIds) => {
-    let [todoIndex, setTodoIndex] = useState(todoIds)
-    let todoIndexObj = Object.fromEntries(todoIndex.map((id, index) => [id, index]))
-    return [todoIndex, todoIndexObj, setTodoIndex]
-}
 
 export const TodosDemo = () => {
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
-    let [todoIndex, todoIndexObj, setTodoIndex] = useTodoIndex(todoIds)
+    let dispatch = useDispatch();
 
-    let dragTodoHandler = (dragIndex, hoverIndex,) => {
-        console.log(`from ${dragIndex} to ${hoverIndex}`)
-        setTodoIndex((prevIndex) =>
-            update(prevIndex, {
-                $splice: [
-                    [dragIndex, 1],
-                    [hoverIndex, 0, prevIndex[dragIndex]],
-                ],
-            }),
-        )
+    let dragTodoHandler = (dragIndex, hoverIndex) => {
+        //console.log(`from ${dragIndex} to ${hoverIndex}`)
+        dispatch(changePriority([dragIndex, hoverIndex]))
     }
     
-    let sortableTree = todoIndex.filter(id => todosEntities['root'].children.includes(id)).map(
+    let sortableTree = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(
         (id) => (
             <TodoSubtree 
                 itmId={id}
-                todoIndex={todoIndex}
-                todoIndexObj={todoIndexObj}
                 onDragTodo={dragTodoHandler}
                 key={id}
             />
@@ -68,11 +54,8 @@ export const TodosDemo = () => {
 
     return (
         <Sortable>
-            {/*console.log('todoIndexObj:', todoIndexObj)*/}
-            {console.log('todoIndex:', todoIndex)}
-
             <Collapsible>
-            {sortableTree}
+                {sortableTree}
             </Collapsible>
         </Sortable>
     )

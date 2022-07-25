@@ -117,7 +117,7 @@ export const TodoItem = ({ todoId }) => {
         <div className="todo-item" key={todoId}>
             <div className='todo-id'></div>
             <div className='todo-category'><b>Category:</b> {todo.category}</div>
-            <div className='todo-title'>{`${todoId}. `}{todo.title}</div>
+            <div className='todo-title'>{`(${todo.priority}) `}{`${todoId}. `}{todo.title}</div>
 
             <div>
                 <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>

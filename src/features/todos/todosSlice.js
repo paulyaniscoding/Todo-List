@@ -15,14 +15,18 @@ const todosAdapter = createEntityAdapter(
     {
         // TODO: 要check check
         sortComparer: (a, b) => {
-            if (a.priority && b.priority) {
-                return b.priority >= a.priority;
-            } else if (a.priority && !b.priority) {
+            const exist = (num) => num || num ===0;
+            let aExists = exist(a.priority)
+            let bExists = exist(b.priority)
+
+            if (aExists && bExists) {
+                return a.priority <= b.priority ? -1:1;
+            } else if (aExists && !bExists) {
                 return -1;
-            } else if (!a.priority && b.priority) {
+            } else if (!aExists && bExists) {
                 return 1;
             } else {
-                return 1;
+                return -1;
             }
         },
     }
@@ -90,6 +94,40 @@ const todosSlice = createSlice({
         startTodo: todosAdapter.upsertOne,
         pauseTodo: todosAdapter.upsertOne,
         endTodo: todosAdapter.upsertOne,
+        changePriority: (state, action) => {
+
+
+            // slow version
+            let [dragIndex, hoverIndex] = action.payload;
+            let dragId = state.ids[dragIndex];
+            let priorityList = state.ids.slice();
+
+            console.log('priorityList:');
+            for (const itm of priorityList) {
+                console.log('itm:', itm)
+            }
+
+
+            priorityList.splice(dragIndex, 1);
+            priorityList.splice(hoverIndex, 0, dragId);
+
+
+            console.log(`from ${dragIndex} to ${hoverIndex}`);
+            console.log('priorityList:');
+            for (const itm of priorityList){
+                console.log('itm:', itm)
+            }
+
+
+            let priorityObj = priorityList.map((id, priority)=>{
+                return { id: id, priority: priority };
+                //return [id, {id, priority}];
+            })
+            //let priorityEntities = Object.fromEntries(priorityObj)
+            console.log('priorityObj:', priorityObj)
+            console.log('state.entities:', state.entities[dragId])
+            todosAdapter.upsertMany(state, priorityObj);
+        },
 
         // postAdded: {
         //     reducer(state, action) {
@@ -134,7 +172,17 @@ const todosSlice = createSlice({
     }
 })
 
-export const { addTodo, startTodo, pauseTodo, endTodo, postUpdated, postDeleted, reactionAdded } = todosSlice.actions
+export const { 
+    addTodo, 
+    startTodo, 
+    pauseTodo, 
+    endTodo, 
+    changePriority,
+
+    postUpdated, 
+    postDeleted, 
+    reactionAdded 
+} = todosSlice.actions
 
 export default todosSlice.reducer;
 
