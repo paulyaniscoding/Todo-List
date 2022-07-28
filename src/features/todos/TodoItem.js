@@ -1,5 +1,5 @@
-
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 
 import {
     selectAllTodos,
@@ -13,9 +13,47 @@ import {
     endTodo,
 } from './todosSlice'
 
+import { 
+    MdPlayArrow,
+    MdPause,
+    MdDone,
+ } from "react-icons/md";
+
+const StyledStartIcon = styled(MdPlayArrow)`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: grey;
+    :hover {
+        color: pink;
+    };
+`;
+
+const StyledPauseIcon = styled(MdPause)`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: grey;
+    :hover {
+        color: pink;
+    };
+`;
+
+const StyledFinishIcon = styled(MdDone)`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: grey;
+    :hover {
+        color: pink;
+    };
+`;
+
 export const TodoItem = ({ todoId }) => {
     const todo = useSelector(state => selectTodoById(state, todoId));
     const dispatch = useDispatch();
+
+    const isDebugView = false;
 
     const formatedTime = (time) => {
         if (time) {
@@ -24,6 +62,7 @@ export const TodoItem = ({ todoId }) => {
             return 'N/A';
         }
     }
+
 
     const onStartClicked = (e, todoId) => {
         if (todo.status === 'notStarted') {
@@ -112,21 +151,48 @@ export const TodoItem = ({ todoId }) => {
     }
 
 
+    const StyledDiv = styled.div`
+        padding: 0.25rem 0.25rem;
+        border: 1px solid rgb(177, 174, 174);
+        border-radius: 0px;
+    `;
 
     return (
-        <div className="todo-item" key={todoId}>
-            <div className='todo-id'></div>
-            <div className='todo-category'><b>Category:</b> {todo.category}</div>
-            <div className='todo-title'>{`(${todo.priority}) `}{`${todoId}. `}{todo.title}</div>
+        <>
+            { isDebugView ? (
+                <div className = "todo-item" key = { todoId } >
+                    <div className='todo-id'></div>
+                    <div className='todo-category'><b>Category:</b> {todo.category}</div>
+                    <div className='todo-title'>{`(${todo.priority}) `}{`${todoId}. `}{todo.title}</div>
 
-            <div>
-                <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>
-                <button onClick={(e) => onPauseClicked(e, todoId)}>Pause</button>
-                <button onClick={(e) => onEndClicked(e, todoId)}>Finish</button>
-                <span className='todo-status'>{todo.status}{', '}</span>
-                <span className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</span>
-            </div>
-        </div>
+                    <div>
+                        <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>
+                        <button onClick={(e) => onPauseClicked(e, todoId)}>Pause</button>
+                        <button onClick={(e) => onEndClicked(e, todoId)}>Finish</button>
+                        <span className='todo-status'>{todo.status}{', '}</span>
+                        <span className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</span>
+                    </div>
+                </div >
+            ) : (
+                <StyledDiv className="todo-item" key={todoId}>
+                    <div className='todo-title' style={{ display: 'inline-block' }}>{todo.title}</div>
+
+                    <div style={{float: 'right', display: 'inline-block'}}>
+                        {(todo.status === 'notStarted' || todo.status === 'paused') && (
+                            <StyledStartIcon onClick={(e) => onStartClicked(e, todoId)} />
+                        )}
+                        {(todo.status === 'current') && (
+                            <StyledPauseIcon onClick={(e) => onPauseClicked(e, todoId)} />
+                        )}
+                        {(todo.status !== 'finished') && (
+                            <StyledFinishIcon onClick={(e) => onEndClicked(e, todoId)} />
+                        )}
+                        <span className='todo-status'>{todo.status}</span>
+                    </div>
+                    <div style={{clear: 'both'}}></div>
+                </StyledDiv>
+            )}
+        </>
     )
 
     //return (

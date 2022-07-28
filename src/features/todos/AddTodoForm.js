@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 
 import { 
     selectAllTodos,
@@ -9,6 +10,18 @@ import {
 
 
 //import { selectAllUsers, selectUserById } from '../users/usersSlice'
+
+const StyledInput = styled.input`
+    width: 500px;
+    height: 20px;
+    color: orange;
+    backgound: transparent;
+    border: 1px solid black;
+    border-radius: 5px;
+    :focus {     
+        outline: none;
+    }
+`
 
 export const AddtodoForm = ({ parentId }) => {
     // Redux State and Dispatch
@@ -26,16 +39,16 @@ export const AddtodoForm = ({ parentId }) => {
 
     // Event Handlers
     const onCategoryChanged = e => setCategory(e.target.value)
-    const onTitleChanged = e => setTitle(e.target.value)
+    const onTitleChanged = e => {setTitle(e.target.value); console.log(e.target);}
     const onContentChanged = e => setContent(e.target.value)
     const onRequiredTimeChanged = e => setRequiredTime(e.target.value)
 
 
-    const isRootTasks = parentId !== 'root';
-    let adjustedCategory = isRootTasks ? todosEntities[parentId].category : category;
+    const isRootTasks = parentId === 'root';
+    let adjustedCategory = isRootTasks ? category : todosEntities[parentId].category;
     // TODO: 要check
     const canSave =
-        [adjustedCategory, title, content, requiredTime].every(Boolean) && addRequestStatus === 'idle'
+        [adjustedCategory, title].every(Boolean) && addRequestStatus === 'idle'
     const onSaveTodoClicked = async () => {
         if (canSave) {
 
@@ -72,53 +85,47 @@ export const AddtodoForm = ({ parentId }) => {
 
 
     return (
-        <section>
-            <h2>Add Todo</h2>
+        <div>
+            {isRootTasks && <h2>Add Todo</h2>}
             <form>
-                <div>
-                    <label htmlFor="todoCategory">Category: </label>
-                    {!isRootTasks ? (
-                        <>
-                            <input type="text" list="todoCategory" value={category} onChange={onCategoryChanged}/>
-                            <datalist id="todoCategory">
-                                {todoCategoryOptions}
-                            </datalist>
-                        </>
-                    ) : (
-                            <span>{todosEntities[parentId].category}</span>
-                    )}
+                
                     
-                </div>
+                {isRootTasks && (
+                    <div>
+                        <label htmlFor="todoCategory">Category: </label>
+                        <input type="text" list="todoCategory" value={category} onChange={onCategoryChanged}/>
+                        <datalist id="todoCategory">
+                            {todoCategoryOptions}
+                        </datalist>
+                    </div>
+                )}
+                    
+                
                 <div>
                     <label htmlFor="todoTitle">Title:</label>
-                    <input
+                    <StyledInput
                         type="text"
                         id="todoTitle"
                         name="todoTitle"
                         value={title}
                         onChange={onTitleChanged}
                     />
-                </div>
-                <div>
-                    <label htmlFor="todoContent">Content:</label>
-                    <textarea
-                        id="todoContent"
-                        name="todoContent"
-                        value={content}
-                        onChange={onContentChanged}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="todoRequiredTime">Time Needed:</label>
-                    <input
-                        type="text"
-                        id="todoRequiredTime"
-                        name="todoRequiredTime"
-                        value={requiredTime}
-                        onChange={onRequiredTimeChanged}
-                    />
-                </div>
 
+                    
+                    {/**
+                     * TODO: 要將Title Input 變翻做Controlled Component
+                        style={{
+                            width: '500px',
+                            height: '30px',
+                            color: 'orange',
+                            backgound: 'transparent',
+                            border: 'none',
+                        }}
+                        **/}
+                    <button type="button" onClick={onSaveTodoClicked} disabled={!canSave}>
+                        Save
+                    </button>
+                </div>
 {/*
                 <label htmlFor="todoAuthor">Author:</label>
                 <select id="todoAuthor" value={userId} onChange={onAuthorChanged}>
@@ -128,10 +135,7 @@ export const AddtodoForm = ({ parentId }) => {
 */}
 
 
-                <button type="button" onClick={onSaveTodoClicked} disabled={!canSave}>
-                    Save
-                </button>
             </form>
-        </section>
+        </div>
     )
 }

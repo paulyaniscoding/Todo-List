@@ -4,6 +4,7 @@ import {
     useDrag,
     useDrop
 } from 'react-dnd'
+import styled from '@emotion/styled'
 
 import { ItemTypes } from './ItemTypes'
 
@@ -20,9 +21,9 @@ import {
 } from '../../todos/todosSlice'
 
 const style = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
+    //border: '1px dashed gray',
+    padding: '10px 0px 0px 40px',//'0.5rem 1rem',
+    //marginBottom: '.5rem',
     backgroundColor: 'white',
     cursor: 'move',
 }
@@ -33,10 +34,11 @@ export const SortableItem = ({ id, itemParent, moveItem, children }) => {
     let todoIds = useSelector(selectTodoIds);
     let priority = todosEntities[id].priority;
 
-    const [{ handlerId }, drop] = useDrop({
+    const [{ isOver, handlerId }, drop] = useDrop({
         accept: `${ItemTypes.TODO}-${itemParent}`,
         collect(monitor) {
             return {
+                isOver: monitor.isOver(),
                 handlerId: monitor.getHandlerId(),
             }
         },
@@ -89,10 +91,18 @@ export const SortableItem = ({ id, itemParent, moveItem, children }) => {
         }),
     })
     const opacity = isDragging ? 0 : 1
+    // const SortableDiv = styled.div`
+    //     border: 1px dashed gray;
+    //     padding: 0.5rem 1rem;
+    //     marginBottom: .5rem;
+    //     backgroundColor: white;
+    //     cursor: move;
+    //     opacity: ${opacity};
+    // `
+
     drag(drop(ref))
     return (
         <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-            {console.log('todoIds', todoIds)}
             {children}
         </div>
     )

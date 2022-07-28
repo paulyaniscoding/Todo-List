@@ -1,6 +1,32 @@
 import React from "react";
+import styled from '@emotion/styled'
 
-export function Collapsible({ collapsed, children }) {
+import {
+    MdChevronRight,
+    MdExpandMore,
+} from "react-icons/md";
+
+const StyledCollapsedIcon = styled(MdChevronRight)`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: grey;
+    :hover {
+        color: pink;
+    };
+`;
+
+const StyledExpandedIcon = styled(MdExpandMore)`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: grey;
+    :hover {
+        color: pink;
+    };
+`;
+
+export function Collapsible({ parentNode, collapsed, children }) {
     const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
 
     const style = {
@@ -9,21 +35,25 @@ export function Collapsible({ collapsed, children }) {
         },
         expanded: {
             display: "block"
-        },
-        buttonStyle: {
-            display: "block",
-            width: "100%"
         }
     };
 
     return (
         <div>
-            <button
-                style={style.buttonStyle}
-                onClick={() => setIsCollapsed(!isCollapsed)}
-            >
-                {isCollapsed ? "Show" : "Hide"} Content
-            </button>
+            <div style={{display: 'flex'}}>
+                <div style={{width: '40px'}}>
+                    {isCollapsed ? (
+                        <StyledCollapsedIcon
+                            onClick={() => setIsCollapsed(!isCollapsed)}
+                        />
+                    ) : (
+                        <StyledExpandedIcon
+                            onClick={() => setIsCollapsed(!isCollapsed)}
+                        />
+                    )}
+                </div>
+                {parentNode}
+            </div>
             <div
                 className="collapse-content"
                 // 决定显示和折叠
@@ -31,6 +61,7 @@ export function Collapsible({ collapsed, children }) {
                 // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
                 aria-expanded={isCollapsed}
             >
+                <hr />
                 {children}
             </div>
         </div>

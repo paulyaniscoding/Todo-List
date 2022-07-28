@@ -5,19 +5,12 @@ import React, {
     useState,
 } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { MinimalRenderer } from './MinimalRenderer'
-import { TodosSublist } from './TodosSublist'
-import { TodoItem } from './TodoItem'
 import { TodoSubtree } from './TodoSubtree'
 
 
 import { Sortable } from '../utility/Sortable/Sortable'
-import { SortableItem } from '../utility/Sortable/SortableItem'
-import { ItemTypes } from '../utility/Sortable/ItemTypes'
-import { Collapsible } from '../utility/Collapsible/Collapsible'
 
-import '../../App.css';
+//import '../../App.css';
 
 import {
     selectAllTodos,
@@ -53,9 +46,7 @@ export const TodosDemo = () => {
 
     return (
         <Sortable>
-            <Collapsible>
-                {sortableTree}
-            </Collapsible>
+            {sortableTree}
         </Sortable>
     )
 }
