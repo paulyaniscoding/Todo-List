@@ -5,10 +5,11 @@ import React, {
     useState,
 } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { TodoSubtree } from './TodoSubtree'
+import { Helmet } from "react-helmet";
 
 
 import { Sortable } from '../utility/Sortable/Sortable'
+import { TodoSubtree } from './TodoSubtree'
 
 //import '../../App.css';
 
@@ -36,16 +37,21 @@ export const TodosDemo = () => {
     
     let sortableTree = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(
         (id) => (
-            <TodoSubtree 
-                itmId={id}
-                onDragTodo={dragTodoHandler}
-                key={id}
-            />
+            <>
+                <TodoSubtree
+                    itmId={id}
+                    onDragTodo={dragTodoHandler}
+                    key={id}
+                />
+            </>
         )
     );
 
     return (
         <Sortable>
+            <Helmet>
+                <title>Todo List</title>
+            </Helmet>
             {sortableTree}
         </Sortable>
     )

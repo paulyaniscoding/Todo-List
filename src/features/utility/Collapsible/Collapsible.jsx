@@ -26,17 +26,15 @@ const StyledExpandedIcon = styled(MdExpandMore)`
     };
 `;
 
+const CollapsibleDiv = styled.div`
+    display: ${props => (props.isCollapsed?'none':'block')};
+    margin-left: 10px;
+    border-left: 7px solid rgb(58, 244, 58);
+    
+`
+
 export function Collapsible({ parentNode, collapsed, children }) {
     const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
-
-    const style = {
-        collapsed: {
-            display: "none"
-        },
-        expanded: {
-            display: "block"
-        }
-    };
 
     return (
         <div>
@@ -54,16 +52,14 @@ export function Collapsible({ parentNode, collapsed, children }) {
                 </div>
                 {parentNode}
             </div>
-            <div
-                className="collapse-content"
-                // 决定显示和折叠
-                style={isCollapsed ? style.collapsed : style.expanded}
+            <CollapsibleDiv
+                isCollapsed={isCollapsed}
                 // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
                 aria-expanded={isCollapsed}
             >
                 <hr />
                 {children}
-            </div>
+            </CollapsibleDiv>
         </div>
     );
 }
