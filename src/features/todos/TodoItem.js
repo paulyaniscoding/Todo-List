@@ -23,7 +23,7 @@ const StyledStartIcon = styled(MdPlayArrow)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: grey;
+    color: gray;
     :hover {
         color: pink;
     };
@@ -33,7 +33,7 @@ const StyledPauseIcon = styled(MdPause)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: grey;
+    color: gray;
     :hover {
         color: pink;
     };
@@ -43,11 +43,20 @@ const StyledFinishIcon = styled(MdDone)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: grey;
+    color: gray;
     :hover {
         color: pink;
     };
 `;
+
+const StyledDiv = styled.div`
+    display: grid;
+    grid-template-columns: 100px 500px 100px;
+    padding: 0.25rem 0.25rem;
+    border: 1px solid rgb(177, 174, 174);
+    border-radius: 0px;
+`;
+//box-shadow: 0 1px 3px 0 #999999;
 
 export const TodoItem = ({ todoId }) => {
     const todo = useSelector(state => selectTodoById(state, todoId));
@@ -151,11 +160,6 @@ export const TodoItem = ({ todoId }) => {
     }
 
 
-    const StyledDiv = styled.div`
-        padding: 0.25rem 0.25rem;
-        border: 1px solid rgb(177, 174, 174);
-        border-radius: 0px;
-    `;
 
     return (
         <>
@@ -175,9 +179,9 @@ export const TodoItem = ({ todoId }) => {
                 </div >
             ) : (
                 <StyledDiv className="todo-item" key={todoId}>
-                    <div className='todo-title' style={{ display: 'inline-block' }}>{todo.title}</div>
-
-                    <div style={{float: 'right', display: 'inline-block'}}>
+                    <div className='todo-title'>{todo.title}</div>
+                    <div></div>
+                    <div>
                         {(todo.status === 'notStarted' || todo.status === 'paused') && (
                             <StyledStartIcon onClick={(e) => onStartClicked(e, todoId)} />
                         )}
@@ -189,7 +193,6 @@ export const TodoItem = ({ todoId }) => {
                         )}
                         <span className='todo-status'>{todo.status}</span>
                     </div>
-                    <div style={{clear: 'both'}}></div>
                 </StyledDiv>
             )}
         </>

@@ -10,7 +10,7 @@ const StyledCollapsedIcon = styled(MdChevronRight)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: grey;
+    color: gray;
     :hover {
         color: pink;
     };
@@ -20,7 +20,7 @@ const StyledExpandedIcon = styled(MdExpandMore)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: grey;
+    color: gray;
     :hover {
         color: pink;
     };
@@ -28,28 +28,56 @@ const StyledExpandedIcon = styled(MdExpandMore)`
 
 const CollapsibleDiv = styled.div`
     display: ${props => (props.isCollapsed?'none':'block')};
-    margin-left: 10px;
-    border-left: 7px solid rgb(58, 244, 58);
-    
+    border-left: 7px solid gray;  
 `
+
+const StyledCollapsibleDiv = styled.div`
+    width: 7px;
+    background-color: ${props => props.isCollapsed ? '#c4c4c4' : 'gray'};
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+`
+
+const AsistingAlignDiv = styled.div`
+    width: 14px;
+    background-color: black;
+    position: static;
+`
+
+const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
+    return (
+
+        <StyledCollapsibleDiv
+            isCollapsed={isCollapsed}
+            onClick={() => setIsCollapsed(!isCollapsed)}
+        />
+    )
+
+    // Arrow Button
+    // return (
+    //     isCollapsed ? (
+    //         <StyledCollapsedIcon
+    //             onClick={() => setIsCollapsed(!isCollapsed)}
+    //         />
+    //     ) : (
+    //         <StyledExpandedIcon
+    //             onClick={() => setIsCollapsed(!isCollapsed)}
+    //         />
+    //     )
+    // )
+}
 
 export function Collapsible({ parentNode, collapsed, children }) {
     const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
 
     return (
         <div>
-            <div style={{display: 'flex'}}>
-                <div style={{width: '40px'}}>
-                    {isCollapsed ? (
-                        <StyledCollapsedIcon
-                            onClick={() => setIsCollapsed(!isCollapsed)}
-                        />
-                    ) : (
-                        <StyledExpandedIcon
-                            onClick={() => setIsCollapsed(!isCollapsed)}
-                        />
-                    )}
-                </div>
+            <div style={{display: 'flex', alignItems: 'center', height: '100%', position: 'relative'}}>
+                <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed}/>
+                <AsistingAlignDiv></AsistingAlignDiv>
                 {parentNode}
             </div>
             <CollapsibleDiv
@@ -57,7 +85,6 @@ export function Collapsible({ parentNode, collapsed, children }) {
                 // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
                 aria-expanded={isCollapsed}
             >
-                <hr />
                 {children}
             </CollapsibleDiv>
         </div>

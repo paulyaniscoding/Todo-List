@@ -5,7 +5,6 @@ import React, {
     useState,
 } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Helmet } from "react-helmet";
 
 
 import { Sortable } from '../utility/Sortable/Sortable'
@@ -35,7 +34,7 @@ export const TodosDemo = () => {
         dispatch(changePriority([dragIndex, hoverIndex]))
     }
     
-    let sortableTree = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(
+    let todoSubtrees = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(
         (id) => (
             <>
                 <TodoSubtree
@@ -48,11 +47,10 @@ export const TodosDemo = () => {
     );
 
     return (
-        <Sortable>
-            <Helmet>
-                <title>Todo List</title>
-            </Helmet>
-            {sortableTree}
-        </Sortable>
+        <>
+            <Sortable >
+                {todoSubtrees}
+            </Sortable>
+        </>
     )
 }

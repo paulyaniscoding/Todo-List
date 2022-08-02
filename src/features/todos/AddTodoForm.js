@@ -92,8 +92,7 @@ export const AddtodoForm = ({ parentId }) => {
                     
                 {isRootTasks && (
                     <div>
-                        <label htmlFor="todoCategory">Category: </label>
-                        <input type="text" list="todoCategory" value={category} onChange={onCategoryChanged}/>
+                        <input type="text" list="todoCategory" placeholder="Category" value={category} onChange={onCategoryChanged}/>
                         <datalist id="todoCategory">
                             {todoCategoryOptions}
                         </datalist>
@@ -102,12 +101,12 @@ export const AddtodoForm = ({ parentId }) => {
                     
                 
                 <div>
-                    <label htmlFor="todoTitle">Title:</label>
                     <StyledInput
                         type="text"
                         id="todoTitle"
                         name="todoTitle"
                         value={title}
+                        placeholder="Title"
                         onChange={onTitleChanged}
                     />
 

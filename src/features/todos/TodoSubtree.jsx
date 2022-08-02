@@ -32,13 +32,11 @@ import {
     MdAddCircle,
 } from "react-icons/md";
 
-
-
 const StyledNonHoveringAddIcon = styled(MdAddCircleOutline)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: grey;
+    color: gray;
 `;
 
 const StyledHoveringAddIcon = styled(MdAddCircle)`
@@ -74,42 +72,30 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
 
-    const StyledTodoItem = styled(TodoItem)`
-        background-color: black;
-        padding: 0.25rem 0.25rem;
-        border: 10px solid rgb(177, 174, 174);
-        border-radius: 7px;
-    `;
-
-    let subtree = '';
-    if (true){//(todosEntities[itmId]?.children) {
-        subtree = (
-            <Collapsible parentNode={(<TodoItem todoId={itmId}/>)} collapsed={true}>
-                {todoIds.filter(id => todosEntities[itmId].children.includes(id) ).map(
-                    (childId) => (
-                        <TodoSubtree
-                            itmId={childId}
-                            onDragTodo={onDragTodo}
-                            key={childId}
-                        />
-                    )
-                )}
-                {showingAddTodoForm ? (
-                    <AddtodoForm parentId={itmId} />
-                ) : (
-                    <StyledAddIcon clickHandler={() => {setShowingAddTodoForm(true)}} />
-                )}
-            </Collapsible>
+    let todoSubtrees = (
+        todoIds.filter(id => todosEntities[itmId].children.includes(id)).map(
+            (childId) => (
+                <TodoSubtree
+                    itmId={childId}
+                    onDragTodo={onDragTodo}
+                    key={childId}
+                />
+            )
         )
-    };
+    );
+    let addTodoZone = showingAddTodoForm ? (
+                            <AddtodoForm parentId={itmId} />
+                        ) : (
+                            <StyledAddIcon clickHandler={() => { setShowingAddTodoForm(true) }} />
+                        );
 
     let itemParent = todosEntities[itmId].parent
     return (
-        <>
-            <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
-                {subtree}
-            </SortableItem>
-            <hr/>
-        </>
+        <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
+            <Collapsible parentNode={(<TodoItem todoId={itmId} />)} collapsed={true}>
+                {todoSubtrees}
+                {addTodoZone}
+            </Collapsible>
+        </SortableItem>
     );
 };
