@@ -72,15 +72,20 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
 
+    let treeRoots = todoIds.filter(id => todosEntities[itmId].children.includes(id))
     let todoSubtrees = (
-        todoIds.filter(id => todosEntities[itmId].children.includes(id)).map(
-            (childId) => (
-                <TodoSubtree
-                    itmId={childId}
-                    onDragTodo={onDragTodo}
-                    key={childId}
-                />
-            )
+        treeRoots.map(
+            (childId, index) => {
+                return (
+                    <div style={{ marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'), }}>
+                        <TodoSubtree
+                            itmId={childId}
+                            onDragTodo={onDragTodo}
+                            key={childId}
+                        />
+                    </div>
+                );
+            }
         )
     );
     let addTodoZone = showingAddTodoForm ? (
@@ -94,7 +99,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
         <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
             <Collapsible parentNode={(<TodoItem todoId={itmId} />)} collapsed={true}>
                 {todoSubtrees}
-                {addTodoZone}
+                {/*addTodoZone*/}
             </Collapsible>
         </SortableItem>
     );

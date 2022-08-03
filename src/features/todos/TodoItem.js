@@ -50,13 +50,15 @@ const StyledFinishIcon = styled(MdDone)`
 `;
 
 const StyledDiv = styled.div`
+    width: 100%;
     display: grid;
-    grid-template-columns: 100px 500px 100px;
+    grid-template-columns: auto 1fr auto;
     padding: 0.25rem 0.25rem;
     border: 1px solid rgb(177, 174, 174);
+    border-left: 0;
     border-radius: 0px;
 `;
-//
+//    grid-template-columns: 500px auto 100px;
 //box-shadow: 0 1px 3px 0 #999999;
 
 export const TodoItem = ({ todoId }) => {

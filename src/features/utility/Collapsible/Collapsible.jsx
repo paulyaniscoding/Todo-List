@@ -29,27 +29,22 @@ const StyledExpandedIcon = styled(MdExpandMore)`
 
 const CollapsibleZone = styled.div`
     display: ${props => (props.isCollapsed?'none':'block')};
-    border-left: 7px solid  ${props => (props.isCollapsed ? 'gray' : 'black')};;  
     margin: 0px 0 0px 0;
+    gird-column: 2 / 3;
+    gird-row: 2 / 3;
 `
 
 const StyledCollapsibleBtn = styled.div`
     width: 7px;
     border: none;
     padding: none;
-    background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
+    background-color: gray;
     cursor: pointer;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    align-self: stretch;
 `
-
-const AsistingAlignDiv = styled.div`
-    width: 14px;
-    background-color: black;
-    position: static;
-`
+//background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
 
 const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
     return (
@@ -77,10 +72,23 @@ export function Collapsible({ parentNode, collapsed, children }) {
     const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
 
 return (
-    <div style={{marginBottom: '10px', }}>
-        <div style={{ display: 'flex', alignItems: 'center', height: '100%', position: 'relative', border: 'none', padding: 'none' }}>
-            <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-            <AsistingAlignDiv></AsistingAlignDiv>
+    <div style={{
+        display: 'grid', 
+        gridTemplateColumns: '7px 1fr',
+        gap: '0',
+        justifyContent: 'start',
+        alignItems: 'start',
+    }}>
+        <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+        <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            height: '100%', 
+            border: 'none', 
+            padding: 'none', 
+            girdColumn: '2 / 3', 
+            girdRow: '1 / 2', 
+        }}>    
             {parentNode}
         </div>
         <CollapsibleZone
@@ -88,27 +96,9 @@ return (
             // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
             aria-expanded={isCollapsed}
         >
+            <div style={{height: '10px'}}></div>
             {children}
         </CollapsibleZone>
     </div>
 );
 }
-
-
-
-// return (
-//     <div>
-//         <div style={{ display: 'flex', alignItems: 'center', height: '100%', position: 'relative', border: 'none', padding: 'none' }}>
-//             <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-//             <AsistingAlignDiv></AsistingAlignDiv>
-//             {parentNode}
-//         </div>
-//         <CollapsibleZone
-//             isCollapsed={isCollapsed}
-//             // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
-//             aria-expanded={isCollapsed}
-//         >
-//             {children}
-//         </CollapsibleZone>
-//     </div>
-// );

@@ -34,21 +34,26 @@ export const TodosDemo = () => {
         dispatch(changePriority([dragIndex, hoverIndex]))
     }
     
-    let todoSubtrees = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(
-        (id) => (
-            <>
-                <TodoSubtree
-                    itmId={id}
-                    onDragTodo={dragTodoHandler}
-                    key={id}
-                />
-            </>
-        )
+    let treeRoots = todoIds.filter(id => todosEntities['root'].children.includes(id))
+    let todoSubtrees = treeRoots.map(
+        (id, index) => {
+            //
+            return (
+                <div style={{ marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'), }}>
+                    <TodoSubtree
+                        itmId={id}
+                        onDragTodo={dragTodoHandler}
+                        key={id}
+                        
+                    />
+                </div>
+            );
+        }
     );
 
     return (
         <>
-            <Sortable >
+            <Sortable>
                 {todoSubtrees}
             </Sortable>
         </>
