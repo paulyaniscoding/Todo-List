@@ -56,6 +56,7 @@ const StyledDiv = styled.div`
     border: 1px solid rgb(177, 174, 174);
     border-radius: 0px;
 `;
+//
 //box-shadow: 0 1px 3px 0 #999999;
 
 export const TodoItem = ({ todoId }) => {

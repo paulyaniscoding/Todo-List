@@ -85,7 +85,7 @@ export const AddtodoForm = ({ parentId }) => {
 
 
     return (
-        <div>
+        <div style={{marginBottom: '20px'}}>
             {isRootTasks && <h2>Add Todo</h2>}
             <form>
                 

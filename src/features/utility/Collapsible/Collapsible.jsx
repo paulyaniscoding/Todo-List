@@ -1,5 +1,6 @@
 import React from "react";
 import styled from '@emotion/styled'
+import {css} from '@emotion/react'
 
 import {
     MdChevronRight,
@@ -26,14 +27,17 @@ const StyledExpandedIcon = styled(MdExpandMore)`
     };
 `;
 
-const CollapsibleDiv = styled.div`
+const CollapsibleZone = styled.div`
     display: ${props => (props.isCollapsed?'none':'block')};
-    border-left: 7px solid gray;  
+    border-left: 7px solid  ${props => (props.isCollapsed ? 'gray' : 'black')};;  
+    margin: 0px 0 0px 0;
 `
 
-const StyledCollapsibleDiv = styled.div`
+const StyledCollapsibleBtn = styled.div`
     width: 7px;
-    background-color: ${props => props.isCollapsed ? '#c4c4c4' : 'gray'};
+    border: none;
+    padding: none;
+    background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
     cursor: pointer;
     position: absolute;
     top: 0;
@@ -49,8 +53,7 @@ const AsistingAlignDiv = styled.div`
 
 const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
     return (
-
-        <StyledCollapsibleDiv
+        <StyledCollapsibleBtn
             isCollapsed={isCollapsed}
             onClick={() => setIsCollapsed(!isCollapsed)}
         />
@@ -73,20 +76,39 @@ const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
 export function Collapsible({ parentNode, collapsed, children }) {
     const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
 
-    return (
-        <div>
-            <div style={{display: 'flex', alignItems: 'center', height: '100%', position: 'relative'}}>
-                <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed}/>
-                <AsistingAlignDiv></AsistingAlignDiv>
-                {parentNode}
-            </div>
-            <CollapsibleDiv
-                isCollapsed={isCollapsed}
-                // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
-                aria-expanded={isCollapsed}
-            >
-                {children}
-            </CollapsibleDiv>
+return (
+    <div style={{marginBottom: '10px', }}>
+        <div style={{ display: 'flex', alignItems: 'center', height: '100%', position: 'relative', border: 'none', padding: 'none' }}>
+            <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            <AsistingAlignDiv></AsistingAlignDiv>
+            {parentNode}
         </div>
-    );
+        <CollapsibleZone
+            isCollapsed={isCollapsed}
+            // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
+            aria-expanded={isCollapsed}
+        >
+            {children}
+        </CollapsibleZone>
+    </div>
+);
 }
+
+
+
+// return (
+//     <div>
+//         <div style={{ display: 'flex', alignItems: 'center', height: '100%', position: 'relative', border: 'none', padding: 'none' }}>
+//             <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+//             <AsistingAlignDiv></AsistingAlignDiv>
+//             {parentNode}
+//         </div>
+//         <CollapsibleZone
+//             isCollapsed={isCollapsed}
+//             // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
+//             aria-expanded={isCollapsed}
+//         >
+//             {children}
+//         </CollapsibleZone>
+//     </div>
+// );
