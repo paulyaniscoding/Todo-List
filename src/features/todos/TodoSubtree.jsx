@@ -25,7 +25,7 @@ import {
     pauseTodo,
     endTodo,
 } from './todosSlice'
-import { AddtodoForm } from './AddTodoForm'
+import { AddTodoForm, AddTodoFormInlineLayout, } from './AddTodoForm'
 
 import {
     MdAddCircleOutline,
@@ -89,7 +89,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
         )
     );
     let addTodoZone = showingAddTodoForm ? (
-                            <AddtodoForm parentId={itmId} />
+        <AddTodoForm parentId={itmId} formLayout={AddTodoFormInlineLayout}/>
                         ) : (
                             <StyledAddIcon clickHandler={() => { setShowingAddTodoForm(true) }} />
                         );
