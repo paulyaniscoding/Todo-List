@@ -23,28 +23,11 @@ const StyledInput = styled.input`
     }
 `
 
-const useAddTodo = (parentId) => {
-    const dispatch = useDispatch();
-    const isRootTasks = parentId === 'root';
-
-    const dispatchTodo = ({ category, title, content, requiredTime }) =>
-        dispatch(addTodo(category, title, content, requiredTime, parentId));
-
-    return [isRootTasks, dispatchTodo];
-}
-
-export const InlineAddTodoForm = ({ parentId }) => {
-
-
-}
-
 export const AddtodoForm = ({ parentId }) => {
-    // *hook
     // Redux State and Dispatch
     const allTodos = useSelector(selectAllTodos);
     const todosEntities = useSelector(selectTodoEntities);
-    //const dispatch = useDispatch();
-    const [isRootTasks, dispatchTodo] = useAddTodo(parentId);
+    const dispatch = useDispatch();
 
     // React State
     const [category, setCategory] = useState('');
@@ -53,31 +36,44 @@ export const AddtodoForm = ({ parentId }) => {
     const [requiredTime, setRequiredTime] = useState('');
     const [addRequestStatus, setAddRequestStatus] = useState('idle');
 
+
     // Event Handlers
     const onCategoryChanged = e => setCategory(e.target.value)
     const onTitleChanged = e => {setTitle(e.target.value); console.log(e.target);}
+    const onContentChanged = e => setContent(e.target.value)
+    const onRequiredTimeChanged = e => setRequiredTime(e.target.value)
 
 
-    // *hook
-    //const isRootTasks = parentId === 'root';
+    const isRootTasks = parentId === 'root';
     let adjustedCategory = isRootTasks ? category : todosEntities[parentId].category;
-
     // TODO: 要check
     const canSave =
         [adjustedCategory, title].every(Boolean) && addRequestStatus === 'idle'
     const onSaveTodoClicked = async () => {
         if (canSave) {
 
-            // *hook
-            //dispatch(addTodo(adjustedCategory, title, content, requiredTime, parentId));
-            dispatchTodo({ adjustedCategory, title, content, requiredTime });
-            
+            dispatch(addTodo(adjustedCategory, title, content, requiredTime, parentId));
             setCategory('');
             setTitle('');
             setContent('');
             setRequiredTime('');
         }
 
+        /*
+        if (canSave) {
+            try {
+                setAddRequestStatus('pending')
+                await dispatch(addNewtodo({ title, content, user: userId })).unwrap()
+                setTitle('')
+                setContent('')
+                //setUserId('')
+            } catch (err) {
+                console.error('Failed to save the todo: ', err)
+            } finally {
+                setAddRequestStatus('idle')
+            }
+        }
+        */
     }
 
     let todoCategories = [...new Set(allTodos.filter(itm => itm.category).map(item => item.category))];
@@ -87,10 +83,13 @@ export const AddtodoForm = ({ parentId }) => {
         </option>
     ));
 
+
     return (
         <div style={{marginBottom: '20px'}}>
             {isRootTasks && <h2>Add Todo</h2>}
-            <form>   
+            <form>
+                
+                    
                 {isRootTasks && (
                     <div>
                         <input type="text" list="todoCategory" placeholder="Category" value={category} onChange={onCategoryChanged}/>
@@ -100,6 +99,7 @@ export const AddtodoForm = ({ parentId }) => {
                     </div>
                 )}
                     
+                
                 <div>
                     <StyledInput
                         type="text"
@@ -125,6 +125,15 @@ export const AddtodoForm = ({ parentId }) => {
                         Save
                     </button>
                 </div>
+{/*
+                <label htmlFor="todoAuthor">Author:</label>
+                <select id="todoAuthor" value={userId} onChange={onAuthorChanged}>
+                    <option value=""></option>
+                    {usersOptions}
+                </select>
+*/}
+
+
             </form>
         </div>
     )

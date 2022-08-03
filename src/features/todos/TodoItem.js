@@ -52,7 +52,7 @@ const StyledFinishIcon = styled(MdDone)`
 const StyledDiv = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 40vw max-content;
     padding: 0.25rem 0.25rem;
     border: 1px solid rgb(177, 174, 174);
     border-left: 0;

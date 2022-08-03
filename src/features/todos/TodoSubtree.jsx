@@ -77,7 +77,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
         treeRoots.map(
             (childId, index) => {
                 return (
-                    <div style={{ marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'), }}>
+                    <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
                         <TodoSubtree
                             itmId={childId}
                             onDragTodo={onDragTodo}
@@ -99,7 +99,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
         <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
             <Collapsible parentNode={(<TodoItem todoId={itmId} />)} collapsed={true}>
                 {todoSubtrees}
-                {/*addTodoZone*/}
+                {addTodoZone}
             </Collapsible>
         </SortableItem>
     );

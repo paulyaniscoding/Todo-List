@@ -39,7 +39,7 @@ export const TodosDemo = () => {
         (id, index) => {
             //
             return (
-                <div style={{ marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'), }}>
+                <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
                     <TodoSubtree
                         itmId={id}
                         onDragTodo={dragTodoHandler}

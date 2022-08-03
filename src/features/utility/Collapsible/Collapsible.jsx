@@ -29,6 +29,7 @@ const StyledExpandedIcon = styled(MdExpandMore)`
 
 const CollapsibleZone = styled.div`
     display: ${props => (props.isCollapsed?'none':'block')};
+    padding: 0 0 0 40px;
     margin: 0px 0 0px 0;
     gird-column: 2 / 3;
     gird-row: 2 / 3;
