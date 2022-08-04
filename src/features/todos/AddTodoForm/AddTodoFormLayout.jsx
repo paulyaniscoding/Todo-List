@@ -27,7 +27,7 @@ const StyledInput = styled.input`
 `
 
 export const AddTodoFormLayout = ({
-    isRootTasks,
+    isInlineForm,
     todoCategoryOptions,
     category,
     onCategoryChanged,
@@ -38,9 +38,9 @@ export const AddTodoFormLayout = ({
 }) => (
 
     <div style={{ marginBottom: '20px' }}>
-        {isRootTasks && <h2>Add Todo</h2>}
+        {!isInlineForm && <h2>Add Todo</h2>}
         <form>
-            {isRootTasks && (
+            {!isInlineForm && (
                 <div>
                     <input type="text" list="todoCategory" placeholder="Category" value={category} onChange={onCategoryChanged} />
                     <datalist id="todoCategory">

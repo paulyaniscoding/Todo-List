@@ -57,37 +57,21 @@ const todosSlice = createSlice({
     reducers: {
         addTodo: {
             reducer(state, action) { 
-                console.log('adding Todo')
-                // Set Real Parent Id
-                let existingCategories = Object.fromEntries(Object.values(state.entities)
-                    .filter(entity => entity.parent === 'root')
-                    .map(entity => {
-                        //console.log('entity.category', entity.category)
-                        //console.log('entity.id', entity.id)
-                        return [entity.category, entity.id];
-                    }
-                ));
-
-                let categoryExists = Object.keys(existingCategories).includes(action.payload.category);
-                let realParentId = categoryExists ? existingCategories[action.payload.category] : action.payload.parent;
-                //console.log('realParentId', realParentId)
-                // ***check 到realParentId
-
                 let prevTodoNum = state.ids.length;
                 //console.log('prevTodoNum', prevTodoNum)
-                if (state.entities[realParentId]?.children) {
-                    state.entities[realParentId].children = [
-                        ...state.entities[realParentId].children,
+                if (state.entities[action.payload.parent]?.children) {
+                    state.entities[action.payload.parent].children = [
+                        ...state.entities[action.payload.parent].children,
                         action.payload.id
                     ];
                 } else {
-                    //console.log('state.entities[realParentId]', state.entities[realParentId])
-                    Object.defineProperty(state.entities[realParentId], 'children', {
+                    //console.log('state.entities[action.payload.parent]', state.entities[action.payload.parent])
+                    Object.defineProperty(state.entities[action.payload.parent], 'children', {
                         value: [
                             action.payload.id
                         ],
                     })
-                    //state.entities[realParentId].children = [
+                    //state.entities[action.payload.parent].children = [
                     //    action.payload.id
                     //];
                 }
@@ -96,10 +80,10 @@ const todosSlice = createSlice({
                 state.ids = [...state.ids, action.payload.id];
                 state.entities[action.payload.id] = {
                     ...action.payload,
-                    parent: realParentId,
+                    parent: action.payload.parent,
                     priority: prevTodoNum,
                 };
-                if (realParentId!=='root'){
+                if (action.payload.parent!=='root'){
                     state.entities[action.payload.id] = {
                         ...state.entities[action.payload.id],
                         category: state.entities[action.payload.id].category,

@@ -31,15 +31,32 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
     const onCategoryChanged = e => setCategory(e.target.value)
     const onTitleChanged = e => {setTitle(e.target.value);}
 
-    const isRootTasks = parentId === 'root';
-    let adjustedCategory = isRootTasks ? category : todosEntities[parentId].category;
+
+    const isInlineForm = parentId !== 'root';
+    // Adjust Parent Id
+    let adjustedParentId = parentId;
+    if (!isInlineForm) {
+        let existingCategories = Object.fromEntries(allTodos
+            .filter(entity => entity.parent === 'root')
+            .map(entity => {
+                return [entity.category, entity.id];
+            }
+            ));
+        let categoryExists = Object.keys(existingCategories).includes(category);
+        adjustedParentId = categoryExists ? existingCategories[category] : parentId;
+    }
+    // Adjust Category
+    let adjustedCategory = isInlineForm ? todosEntities[parentId].category : category;
+
+
+
     // TODO: 要check
     const canSave =
         [adjustedCategory, title].every(Boolean)
     const onSaveTodoClicked = async () => {
         if (canSave) {
             //console.log('addTodo Args:', `${adjustedCategory}, ${title}, ${content}, ${requiredTime}, ${parentId}`)
-            dispatch(addTodo(adjustedCategory, title, content, requiredTime, parentId));
+            dispatch(addTodo(adjustedCategory, title, content, requiredTime, adjustedParentId));
             setCategory('');
             setTitle('');
             setContent('');
@@ -55,7 +72,7 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
     ));
 
     const formLayoutProps = {
-        isRootTasks,
+        isInlineForm,
         todoCategoryOptions,
         category: adjustedCategory,
         onCategoryChanged,

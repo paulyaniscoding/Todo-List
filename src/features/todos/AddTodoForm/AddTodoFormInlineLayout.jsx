@@ -26,7 +26,7 @@ const StyledAddIcon = styled(MdAdd)`
 `
 
 export const AddTodoFormInlineLayout = ({
-    isRootTasks,
+    isInlineForm,
     todoCategoryOptions,
     category,
     onCategoryChanged,
@@ -66,7 +66,7 @@ export const AddTodoFormInlineLayout = ({
                 cursor: 'text',
             }}>
                 <div>
-                    {isRootTasks && (
+                    {!isInlineForm && (
                         <div>
                             <input type="text" list="todoCategory" placeholder="Category" value={category} onChange={onCategoryChanged} />
                             <datalist id="todoCategory">
