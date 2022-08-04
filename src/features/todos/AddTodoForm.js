@@ -37,26 +37,41 @@ export const AddTodoFormInlineLayout = ({
         <div style={{
             display: 'grid',
             gridTemplateColumns: '7px 1fr',
+            //gridTemplateRows: 'fit-content',
             gap: '0',
             justifyContent: 'start',
             alignItems: 'start',
         }}>
             <div style={{
                 width: '7px',
-                height: '50px',
                 border: 'none',
                 padding: 'none',
                 backgroundColor: 'gray',
+                alignSelf: 'stretch',
+                cursor: 'default',
             }}/>
             <div style={{
                 width: '100%',
                 display: 'grid',
                 gridTemplateColumns: 'auto 40vw max-content',
+                alignSelf: 'stretch',
                 padding: '0.25rem 0.25rem',
                 border: '1px solid rgb(177, 174, 174)',
                 borderLeft: '0',
                 borderRadius: '0px',
-            }}/>
+                cursor: 'text',
+            }}>
+                <textarea type="text" placeholder='Add New Todo' style={{
+                    cols: '10',
+                    //rows: '3',
+                    backgroundColor: 'transparent',
+                    //outline: 'none',
+                    border: 'none',
+                    //height: 'fit-content',
+                    overflow: 'hidden',
+                    resize: 'none',
+                }}/>
+            </div>
         </div>
     );
 }
