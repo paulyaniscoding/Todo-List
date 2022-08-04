@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import {css} from '@emotion/react'
 import React, {
     useCallback,
     useEffect,
@@ -25,7 +26,8 @@ import {
     pauseTodo,
     endTodo,
 } from './todosSlice'
-import { AddTodoForm, AddTodoFormInlineLayout, } from './AddTodoForm'
+import { AddTodoForm, } from './AddTodoForm/AddTodoForm'
+import { AddTodoFormInlineLayout, } from './AddTodoForm/AddTodoFormInlineLayout'
 
 import {
     MdAddCircleOutline,
@@ -97,10 +99,10 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
     let itemParent = todosEntities[itmId].parent;
     return (
         <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
-            <Collapsible parentNode={(<TodoItem todoId={itmId} />)} collapsed={true}>
+            <Collapsible parentNode={(<TodoItem todoId={itmId}  />)} collapsed={true}>
                 {todoSubtrees}
                 <AddTodoForm parentId={itmId} formLayout={AddTodoFormInlineLayout} />
             </Collapsible>
         </SortableItem>
     );
-};
+};//css={css`margin: 0 -1px -1px 0;`}

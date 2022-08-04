@@ -25,6 +25,7 @@ const style = {
     //padding: '0 0px 0px 40px',//'0.5rem 1rem',
     //marginBottom: '.5rem',
     cursor: 'move',
+    //margin: '0 -1px -1px 0',
 }
 
 export const SortableItem = ({ id, itemParent, moveItem, children }) => {

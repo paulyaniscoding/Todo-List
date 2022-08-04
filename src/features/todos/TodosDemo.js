@@ -9,6 +9,14 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Sortable } from '../utility/Sortable/Sortable'
 import { TodoSubtree } from './TodoSubtree'
+import { 
+    AddTodoForm, 
+} from './AddTodoForm/AddTodoForm'
+
+
+import {
+    AddTodoFormLayout,
+} from './AddTodoForm/AddTodoFormLayout'
 
 //import '../../App.css';
 
@@ -44,7 +52,6 @@ export const TodosDemo = () => {
                         itmId={id}
                         onDragTodo={dragTodoHandler}
                         key={id}
-                        
                     />
                 </div>
             );
@@ -56,6 +63,7 @@ export const TodosDemo = () => {
             <Sortable>
                 {todoSubtrees}
             </Sortable>
+            <AddTodoForm parentId={'root'} formLayout={AddTodoFormLayout} />
         </>
     )
 }

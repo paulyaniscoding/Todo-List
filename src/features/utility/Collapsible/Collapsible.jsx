@@ -29,7 +29,7 @@ const StyledExpandedIcon = styled(MdExpandMore)`
 
 const CollapsibleZone = styled.div`
     display: ${props => (props.isCollapsed?'none':'block')};
-    padding: 0 0 0 40px;
+    padding: 0 0 0 20px;
     margin: 0px 0 0px 0;
     gird-column: 2 / 3;
     gird-row: 2 / 3;
@@ -44,6 +44,7 @@ const StyledCollapsibleBtn = styled.div`
     grid-column: 1 / 2;
     grid-row: 1 / 3;
     align-self: stretch;
+    margin: 0 -1px -1px 0;
 `
 //background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
 
@@ -79,6 +80,9 @@ return (
         gap: '0',
         justifyContent: 'start',
         alignItems: 'start',
+        borderBottom: '1px solid gray',
+        borderRight: '1px solid gray',
+        margin: '0 -1px -1px 0', /* TODO: 負責出面layout 嘅css 應該放去出面 */
     }}>
         <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
         <div style={{ 

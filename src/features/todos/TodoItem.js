@@ -54,10 +54,13 @@ const StyledDiv = styled.div`
     display: grid;
     grid-template-columns: auto 40vw max-content;
     padding: 0.25rem 0.25rem;
-    border: 1px solid rgb(177, 174, 174);
+    border: 1px solid gray;/*rgb(177, 174, 174);*/
     border-left: 0;
+    margin: 0 -1px -1px 0; /* TODO: 負責出面layout 嘅css 應該放去出面 */
     border-radius: 0px;
+    margin: 0 -1px -1px 0;
 `;
+//margin: 0 -1px -1px 0;
 //    grid-template-columns: 500px auto 100px;
 //box-shadow: 0 1px 3px 0 #999999;
 

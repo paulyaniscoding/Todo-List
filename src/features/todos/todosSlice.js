@@ -57,12 +57,39 @@ const todosSlice = createSlice({
     reducers: {
         addTodo: {
             reducer(state, action) { 
+                // Set Real Parent Id
+                let existingCategories = Object.fromEntries(Object.values(state.entities)
+                    .filter(entity => entity.parent === 'root')
+                    .map(entity => {
+                        //console.log('entity.category', entity.category)
+                        //console.log('entity.id', entity.id)
+                        return [entity.category, entity.id];
+                    }
+                ));
+
+                let categoryExists = Object.keys(existingCategories).includes(action.payload.category);
+                let realParentId = categoryExists ? existingCategories[action.payload.category] : action.payload.parent;
+                //console.log('realParentId', realParentId)
+                // ***check 到realParentId
+
                 let prevTodoNum = state.ids.length;
-                console.log('prevTodoNum', prevTodoNum)
-                state.entities[action.payload.parent].children = [
-                    ...state.entities[action.payload.parent].children,
-                    action.payload.id
-                ];
+                //console.log('prevTodoNum', prevTodoNum)
+                if (state.entities[realParentId]?.children) {
+                    state.entities[realParentId].children = [
+                        ...state.entities[realParentId].children,
+                        action.payload.id
+                    ];
+                } else {
+                    //console.log('state.entities[realParentId]', state.entities[realParentId])
+                    Object.defineProperty(state.entities[realParentId], 'children', {
+                        value: [
+                            action.payload.id
+                        ],
+                    })
+                    //state.entities[realParentId].children = [
+                    //    action.payload.id
+                    //];
+                }
 
                 //todosAdapter.addOne(state, action.payload);
                 state.ids = [...state.ids, action.payload.id];
@@ -70,7 +97,7 @@ const todosSlice = createSlice({
                     ...action.payload,
                     priority: prevTodoNum,
                 };
-                if (action.payload.parent!=='root'){
+                if (realParentId!=='root'){
                     state.entities[action.payload.id] = {
                         ...state.entities[action.payload.id],
                         category: state.entities[action.payload.id].category,
