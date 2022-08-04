@@ -38,7 +38,7 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
         [adjustedCategory, title].every(Boolean)
     const onSaveTodoClicked = async () => {
         if (canSave) {
-            console.log('addTodo Args:', `${adjustedCategory}, ${title}, ${content}, ${requiredTime}, ${parentId}`)
+            //console.log('addTodo Args:', `${adjustedCategory}, ${title}, ${content}, ${requiredTime}, ${parentId}`)
             dispatch(addTodo(adjustedCategory, title, content, requiredTime, parentId));
             setCategory('');
             setTitle('');
@@ -57,7 +57,7 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
     const formLayoutProps = {
         isRootTasks,
         todoCategoryOptions,
-        adjustedCategory,
+        category: adjustedCategory,
         onCategoryChanged,
         title,
         onTitleChanged,

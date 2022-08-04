@@ -13,6 +13,9 @@ import {
     AddTodoForm, 
 } from './AddTodoForm/AddTodoForm'
 
+import {
+    AddTodoFormInlineLayout,
+} from './AddTodoForm/AddTodoFormInlineLayout'
 
 import {
     AddTodoFormLayout,
@@ -63,7 +66,7 @@ export const TodosDemo = () => {
             <Sortable>
                 {todoSubtrees}
             </Sortable>
-            <AddTodoForm parentId={'root'} formLayout={AddTodoFormLayout} />
+            <AddTodoForm parentId={'root'} formLayout={AddTodoFormInlineLayout} />
         </>
     )
 }

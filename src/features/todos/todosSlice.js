@@ -57,6 +57,7 @@ const todosSlice = createSlice({
     reducers: {
         addTodo: {
             reducer(state, action) { 
+                console.log('adding Todo')
                 // Set Real Parent Id
                 let existingCategories = Object.fromEntries(Object.values(state.entities)
                     .filter(entity => entity.parent === 'root')
@@ -95,6 +96,7 @@ const todosSlice = createSlice({
                 state.ids = [...state.ids, action.payload.id];
                 state.entities[action.payload.id] = {
                     ...action.payload,
+                    parent: realParentId,
                     priority: prevTodoNum,
                 };
                 if (realParentId!=='root'){
