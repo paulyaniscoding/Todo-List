@@ -27,14 +27,16 @@ const StyledInput = styled.input`
 `
 
 export const AddTodoFormLayout = ({
-    isInlineForm,
-    todoCategoryOptions,
-    category,
-    onCategoryChanged,
-    title,
-    onTitleChanged,
-    canSave,
-    onSaveTodoClicked,
+    formProps: {
+        isInlineForm,
+        todoCategoryOptions,
+        category,
+        onCategoryChanged,
+        title,
+        onTitleChanged,
+        canSave,
+        onAddTodoClicked,
+    },
 }) => (
 
     <div style={{ marginBottom: '20px' }}>
@@ -69,7 +71,7 @@ export const AddTodoFormLayout = ({
                             border: 'none',
                         }}
                         **/}
-                <button type="button" onClick={onSaveTodoClicked} disabled={!canSave}>
+                <button type="button" onClick={onAddTodoClicked} disabled={!canSave}>
                     Save
                 </button>
             </div>

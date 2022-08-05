@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 
@@ -15,7 +15,7 @@ import {
 
 
 
-export const AddTodoForm = ({ parentId, formLayout }) => {
+export const AddTodoForm = ({ parentId, defaultTitle, formLayout }) => {
     // Redux State and Dispatch
     const allTodos = useSelector(selectAllTodos);
     const todosEntities = useSelector(selectTodoEntities);
@@ -23,13 +23,14 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
 
     // React State
     const [category, setCategory] = useState('');
-    const [title, setTitle] = useState('');
+    let defaultTitleState = defaultTitle ? defaultTitle : '';
+    const [title, setTitle] = useState(defaultTitleState);
     const [content, setContent] = useState('');
     const [requiredTime, setRequiredTime] = useState('');
 
     // Event Handlers
     const onCategoryChanged = e => setCategory(e.target.value)
-    const onTitleChanged = e => {setTitle(e.target.value);}
+    const onTitleChanged = useCallback(e => {setTitle(e.target.value);}, []);
 
 
     const isInlineForm = parentId !== 'root';
@@ -53,7 +54,7 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
     // TODO: 要check
     const canSave =
         [adjustedCategory, title].every(Boolean)
-    const onSaveTodoClicked = async () => {
+    const onAddTodoClicked = async () => {
         if (canSave) {
             //console.log('addTodo Args:', `${adjustedCategory}, ${title}, ${content}, ${requiredTime}, ${parentId}`)
             dispatch(addTodo(adjustedCategory, title, content, requiredTime, adjustedParentId));
@@ -82,12 +83,12 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
         title,
         onTitleChanged,
         canSave,
-        onSaveTodoClicked,
+        onAddTodoClicked,
     }
 
     const clonedFormLayout = React.cloneElement(
         formLayout,
-        {...formLayoutProps}
+        {formProps: formLayoutProps}
     )
 
     return (

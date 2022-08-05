@@ -3,6 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 
 import {
+    MdPlayArrow,
+    MdPause,
+    MdDone,
+} from "react-icons/md";
+
+import {
     selectAllTodos,
     selectTodoEntities,
     fetchTodos,
@@ -14,11 +20,8 @@ import {
     endTodo,
 } from './todosSlice'
 
-import { 
-    MdPlayArrow,
-    MdPause,
-    MdDone,
- } from "react-icons/md";
+import { AddTodoForm } from './AddTodoForm/AddTodoForm'
+import { EditTodoFormLayout } from './AddTodoForm/EditTodoFormLayout'
 
 const StyledStartIcon = styled(MdPlayArrow)`
     width: 40px;
@@ -215,15 +218,17 @@ export const TodoItem = ({ todoId }) => {
                             </div>
                         </>
                     ) : (
-                        <div
-                            style={{
-                                width: 'fit-content',
-                                cursor: 'text',
-                            }}
-                            onClick={() => { toEditMode(false) }}
-                        >
-                            Editing
-                        </div>
+                        <AddTodoForm 
+                            parentId={todo.parent} 
+                            defaultTitle={todo.title}
+                            formLayout={(
+                                <EditTodoFormLayout 
+                                    editProps={{
+                                        endEditMode: () => { toEditMode(false) },
+                                    }}
+                                />
+                            )}
+                        />
                     )}
                 </StyledDiv>
             )}

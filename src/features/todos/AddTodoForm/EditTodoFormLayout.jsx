@@ -9,10 +9,16 @@ import {
 
 import {
     selectAllTodos,
-    addTodo,
-    selectTodoEntities
-} from '../todosSlice'
+    selectTodoEntities,
+    fetchTodos,
+    selectTodoIds,
+    selectTodoById,
 
+    startTodo,
+    pauseTodo,
+    endTodo,
+} from '../todosSlice'
+import { useEffect } from 'react';
 
 const StyledAddIcon = styled(MdAdd)`
     width: 40px;
@@ -26,14 +32,20 @@ const StyledAddIcon = styled(MdAdd)`
 `
 
 export const EditTodoFormLayout = ({
-    isInlineForm,
-    todoCategoryOptions,
-    category,
-    onCategoryChanged,
-    title,
-    onTitleChanged,
-    canSave,
-    onSaveTodoClicked,
+    formProps: {
+        isInlineForm,
+        todoCategoryOptions,
+        category,
+        onCategoryChanged,
+        title,
+        onTitleChanged,
+        canSave,
+        onAddTodoClicked,
+    },
+    
+    editProps: {
+        endEditMode,
+    },
 }) => {
     return (
         <>
@@ -57,7 +69,7 @@ export const EditTodoFormLayout = ({
                     }}
                 />
             </div>
-            <StyledAddIcon onClick={onSaveTodoClicked} disabled={!canSave} />
+            <StyledAddIcon onClick={() => { /*onAddTodoClicked();*/ endEditMode(); }} disabled={!canSave} />
         </>
     );
 }

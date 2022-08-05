@@ -26,14 +26,16 @@ const StyledAddIcon = styled(MdAdd)`
 `
 
 export const AddTodoFormInlineLayout = ({
-    isInlineForm,
-    todoCategoryOptions,
-    category,
-    onCategoryChanged,
-    title,
-    onTitleChanged,
-    canSave,
-    onSaveTodoClicked,
+    formProps: {
+        isInlineForm,
+        todoCategoryOptions,
+        category,
+        onCategoryChanged,
+        title,
+        onTitleChanged,
+        canSave,
+        onAddTodoClicked,
+    },
 }) => {
     return (
         <div style={{
@@ -106,7 +108,7 @@ export const AddTodoFormInlineLayout = ({
                         }}
                     />
                 </div>
-                <StyledAddIcon onClick={onSaveTodoClicked} disabled={!canSave} />
+                <StyledAddIcon onClick={onAddTodoClicked} disabled={!canSave} />
             </div>
         </div>
     );
