@@ -45,6 +45,7 @@ export const TodosDemo = () => {
         dispatch(changePriority([dragIndex, hoverIndex]))
     }
     
+    // TODO: Category Sorting Output 要改, 一Category 上只可有一h2
     let treeRoots = todoIds.filter(id => todosEntities['root'].children.includes(id))
     let todoSubtrees = treeRoots.map(
         (id, index) => {
