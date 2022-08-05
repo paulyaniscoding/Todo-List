@@ -9,7 +9,8 @@ import {
 
 import { 
     selectAllTodos,
-    addTodo, 
+    addTodo,
+    updateTodo,
     selectTodoEntities
 } from '../todosSlice'
 
@@ -32,7 +33,6 @@ export const AddTodoForm = ({ parentId, defaultTitle, formLayout }) => {
     const onCategoryChanged = e => setCategory(e.target.value)
     const onTitleChanged = useCallback(e => {setTitle(e.target.value);}, []);
 
-
     const isInlineForm = parentId !== 'root';
     // Adjust Parent Id
     let adjustedParentId = parentId;
@@ -52,16 +52,23 @@ export const AddTodoForm = ({ parentId, defaultTitle, formLayout }) => {
 
 
     // TODO: 要check
-    const canSave =
+    const canAdd =
         [adjustedCategory, title].every(Boolean)
-    const onAddTodoClicked = async () => {
-        if (canSave) {
+    const onAddTodoClicked = () => {
+        if (canAdd) {
             //console.log('addTodo Args:', `${adjustedCategory}, ${title}, ${content}, ${requiredTime}, ${parentId}`)
             dispatch(addTodo(adjustedCategory, title, content, requiredTime, adjustedParentId));
             setCategory('');
             setTitle('');
             setContent('');
             setRequiredTime('');
+        }
+    }
+
+    const canUpdate = title && title !== defaultTitle;
+    const onUpdateTodoClicked = (todoId) => {
+        if (canUpdate) {
+            dispatch(updateTodo({id:todoId, title}));
         }
     }
 
@@ -82,8 +89,10 @@ export const AddTodoForm = ({ parentId, defaultTitle, formLayout }) => {
         onCategoryChanged,
         title,
         onTitleChanged,
-        canSave,
+        canAdd,
         onAddTodoClicked,
+        canUpdate,
+        onUpdateTodoClicked,
     }
 
     const clonedFormLayout = React.cloneElement(

@@ -224,6 +224,7 @@ export const TodoItem = ({ todoId }) => {
                             formLayout={(
                                 <EditTodoFormLayout 
                                     editProps={{
+                                        todoId: todoId,
                                         endEditMode: () => { toEditMode(false) },
                                     }}
                                 />

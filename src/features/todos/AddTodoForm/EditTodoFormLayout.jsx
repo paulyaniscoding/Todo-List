@@ -4,7 +4,8 @@ import styled from '@emotion/styled'
 
 
 import {
-    MdAdd,
+    MdEditNote,
+    MdUndo,
 } from "react-icons/md";
 
 import {
@@ -20,7 +21,18 @@ import {
 } from '../todosSlice'
 import { useEffect } from 'react';
 
-const StyledAddIcon = styled(MdAdd)`
+const StyledUpdateIcon = styled(MdEditNote)`
+    width: 40px;
+    height: 40px;
+    font-weight: 800;
+    cursor: ${props => props.disabled ? 'default' : 'pointer'};
+    color: ${props => props.disabled ? '#c0c0c0' : 'gray'};
+    :hover {
+        color: ${props => props.disabled ? 'c0c0c0' : 'pink'};
+    };
+`
+
+const StyledUndoIcon = styled(MdUndo)`
     width: 40px;
     height: 40px;
     font-weight: 800;
@@ -39,11 +51,12 @@ export const EditTodoFormLayout = ({
         onCategoryChanged,
         title,
         onTitleChanged,
-        canSave,
-        onAddTodoClicked,
+        canUpdate,
+        onUpdateTodoClicked,
     },
     
     editProps: {
+        todoId,
         endEditMode,
     },
 }) => {
@@ -69,7 +82,19 @@ export const EditTodoFormLayout = ({
                     }}
                 />
             </div>
-            <StyledAddIcon onClick={() => { /*onAddTodoClicked();*/ endEditMode(); }} disabled={!canSave} />
+            <div>
+
+                <StyledUpdateIcon
+                    onClick={() => {
+                        if (canUpdate) {
+                            onUpdateTodoClicked(todoId);
+                            endEditMode();
+                        }
+                    }}
+                    disabled={!canUpdate}
+                />
+                <StyledUndoIcon onClick={endEditMode}/>
+            </div>
         </>
     );
 }

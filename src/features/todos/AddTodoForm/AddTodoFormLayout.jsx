@@ -34,7 +34,7 @@ export const AddTodoFormLayout = ({
         onCategoryChanged,
         title,
         onTitleChanged,
-        canSave,
+        canAdd,
         onAddTodoClicked,
     },
 }) => (
@@ -71,7 +71,7 @@ export const AddTodoFormLayout = ({
                             border: 'none',
                         }}
                         **/}
-                <button type="button" onClick={onAddTodoClicked} disabled={!canSave}>
+                <button type="button" onClick={onAddTodoClicked} disabled={!canAdd}>
                     Save
                 </button>
             </div>

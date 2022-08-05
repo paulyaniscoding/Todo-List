@@ -33,7 +33,7 @@ export const AddTodoFormInlineLayout = ({
         onCategoryChanged,
         title,
         onTitleChanged,
-        canSave,
+        canAdd,
         onAddTodoClicked,
     },
 }) => {
@@ -108,7 +108,7 @@ export const AddTodoFormInlineLayout = ({
                         }}
                     />
                 </div>
-                <StyledAddIcon onClick={onAddTodoClicked} disabled={!canSave} />
+                <StyledAddIcon onClick={onAddTodoClicked} disabled={!canAdd} />
             </div>
         </div>
     );

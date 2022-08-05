@@ -115,6 +115,7 @@ const todosSlice = createSlice({
                 }
             }
         },
+        updateTodo: todosAdapter.upsertOne,
         startTodo: todosAdapter.upsertOne,
         pauseTodo: todosAdapter.upsertOne,
         endTodo: todosAdapter.upsertOne,
@@ -178,6 +179,7 @@ const todosSlice = createSlice({
 
 export const { 
     addTodo, 
+    updateTodo,
     startTodo, 
     pauseTodo, 
     endTodo, 
