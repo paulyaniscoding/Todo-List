@@ -91,7 +91,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
         )
     );
     let addTodoZone = showingAddTodoForm ? (
-        <AddTodoForm parentId={itmId} formLayout={AddTodoFormInlineLayout}/>
+        <AddTodoForm parentId={itmId} formLayout={(<AddTodoFormInlineLayout/>)}/>
                         ) : (
                             <StyledAddIcon clickHandler={() => { setShowingAddTodoForm(true) }} />
                         );
@@ -101,7 +101,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
         <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
             <Collapsible parentNode={(<TodoItem todoId={itmId}  />)} collapsed={true}>
                 {todoSubtrees}
-                <AddTodoForm parentId={itmId} formLayout={AddTodoFormInlineLayout} />
+                <AddTodoForm parentId={itmId} formLayout={<AddTodoFormInlineLayout />}/>
             </Collapsible>
         </SortableItem>
     );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 
@@ -52,7 +53,7 @@ const StyledFinishIcon = styled(MdDone)`
 const StyledDiv = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: auto 40vw max-content;
+    grid-template-columns: 66% 34%;
     padding: 0.25rem 0.25rem;
     border: 1px solid gray;/*rgb(177, 174, 174);*/
     border-left: 0;
@@ -65,6 +66,8 @@ const StyledDiv = styled.div`
 //box-shadow: 0 1px 3px 0 #999999;
 
 export const TodoItem = ({ todoId }) => {
+    const [inEditMode, toEditMode] = useState(false);
+
     const todo = useSelector(state => selectTodoById(state, todoId));
     const dispatch = useDispatch();
 
@@ -185,20 +188,43 @@ export const TodoItem = ({ todoId }) => {
                 </div >
             ) : (
                 <StyledDiv className="todo-item" key={todoId}>
-                    <div className='todo-title'>{todo.title}</div>
-                    <div></div>
-                    <div>
-                        {(todo.status === 'notStarted' || todo.status === 'paused') && (
-                            <StyledStartIcon onClick={(e) => onStartClicked(e, todoId)} />
-                        )}
-                        {(todo.status === 'current') && (
-                            <StyledPauseIcon onClick={(e) => onPauseClicked(e, todoId)} />
-                        )}
-                        {(todo.status !== 'finished') && (
-                            <StyledFinishIcon onClick={(e) => onEndClicked(e, todoId)} />
-                        )}
-                        <span className='todo-status'>{todo.status}</span>
-                    </div>
+                    {!inEditMode ? (    
+                        <>
+                            <div className='todo-title'>
+                                <div
+                                    style={{
+                                        width: 'fit-content',
+                                        cursor: 'text',
+                                    }}
+                                    onClick={() => { toEditMode(true) }}
+                                >
+                                    {todo.title}
+                                </div>
+                            </div>
+                            <div>
+                                {(todo.status === 'notStarted' || todo.status === 'paused') && (
+                                    <StyledStartIcon onClick={(e) => onStartClicked(e, todoId)} />
+                                )}
+                                {(todo.status === 'current') && (
+                                    <StyledPauseIcon onClick={(e) => onPauseClicked(e, todoId)} />
+                                )}
+                                {(todo.status !== 'finished') && (
+                                    <StyledFinishIcon onClick={(e) => onEndClicked(e, todoId)} />
+                                )}
+                                <span className='todo-status'>{todo.status}</span>
+                            </div>
+                        </>
+                    ) : (
+                        <div
+                            style={{
+                                width: 'fit-content',
+                                cursor: 'text',
+                            }}
+                            onClick={() => { toEditMode(false) }}
+                        >
+                            Editing
+                        </div>
+                    )}
                 </StyledDiv>
             )}
         </>

@@ -66,7 +66,10 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
 
     let todoCategories = [...new Set(allTodos.filter(itm => itm.category).map(item => item.category))];
     const todoCategoryOptions = todoCategories.map(category => (
-        <option key={category} value={category}>
+        <option 
+            key={category} 
+            value={category} 
+        >
             {category}
         </option>
     ));
@@ -81,9 +84,15 @@ export const AddTodoForm = ({ parentId, formLayout }) => {
         canSave,
         onSaveTodoClicked,
     }
+
+    const clonedFormLayout = React.cloneElement(
+        formLayout,
+        {...formLayoutProps}
+    )
+
     return (
         <>
-            {formLayout(formLayoutProps) }
+            {clonedFormLayout}
         </>
     )
 }

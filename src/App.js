@@ -14,7 +14,7 @@ function App() {
       <Helmet>
         <title>Todo List</title>
       </Helmet>
-      <AddTodoForm parentId={'root'} formLayout={AddTodoFormLayout}/>
+      <h1>Todo List</h1>
       <TodosDemo/>
       {/*<TodosList />*/}
     </>

@@ -19,9 +19,9 @@ const StyledAddIcon = styled(MdAdd)`
     height: 40px;
     font-weight: 800;
     cursor: ${props => props.disabled ? 'default' : 'pointer'};
-    color: gray;
+    color: ${props => props.disabled ? '#c0c0c0' : 'gray'};
     :hover {
-        color: ${props => props.disabled ? 'gray' : 'pink'};
+        color: ${props => props.disabled ? 'c0c0c0' : 'pink'};
     };
 `
 
@@ -56,8 +56,7 @@ export const AddTodoFormInlineLayout = ({
             <div style={{
                 display: 'grid',
                 width: 'auto',
-                display: 'grid',
-                gridTemplateColumns: 'auto 40vw max-content',
+                gridTemplateColumns: '66% 34%',
                 alignSelf: 'stretch',
                 padding: '0.25rem 0.25rem',
                 border: '1px solid gray', /*rgb(177, 174, 174)',*/
@@ -67,9 +66,24 @@ export const AddTodoFormInlineLayout = ({
             }}>
                 <div>
                     {!isInlineForm && (
-                        <div>
-                            <input type="text" list="todoCategory" placeholder="Category" value={category} onChange={onCategoryChanged} />
-                            <datalist id="todoCategory">
+                        <div style={{
+                            margin: '0 0 5px 0',
+                        }}>
+                            <input 
+                                type="text" 
+                                list="todoCategory" 
+                                placeholder="Category" 
+                                value={category} 
+                                onChange={onCategoryChanged} 
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    outline: 'none',
+                                }}
+                            />
+                            <datalist 
+                                id="todoCategory"
+                            >
                                 {todoCategoryOptions}
                             </datalist>
                         </div>
@@ -80,7 +94,8 @@ export const AddTodoFormInlineLayout = ({
                         value={title}
                         onChange={onTitleChanged}
                         style={{
-                            cols: '10',
+                            width: '100%',
+                            //cols: '10',
                             //rows: '3',
                             backgroundColor: 'transparent',
                             outline: 'none',
@@ -91,9 +106,7 @@ export const AddTodoFormInlineLayout = ({
                         }}
                     />
                 </div>
-                <div />
                 <StyledAddIcon onClick={onSaveTodoClicked} disabled={!canSave} />
-                {`cansave?: ${canSave}`}
             </div>
         </div>
     );

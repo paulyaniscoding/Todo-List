@@ -48,25 +48,28 @@ export const TodosDemo = () => {
     let treeRoots = todoIds.filter(id => todosEntities['root'].children.includes(id))
     let todoSubtrees = treeRoots.map(
         (id, index) => {
-            //
+            let category = todosEntities[id].category;
             return (
-                <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
-                    <TodoSubtree
-                        itmId={id}
-                        onDragTodo={dragTodoHandler}
-                        key={id}
-                    />
-                </div>
+                <>
+                    <h2>{category}</h2>
+                    <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
+                        <TodoSubtree
+                            itmId={id}
+                            onDragTodo={dragTodoHandler}
+                            key={id}
+                        />
+                    </div>
+                </>
             );
         }
     );
 
     return (
         <>
+            <AddTodoForm parentId={'root'} formLayout={<AddTodoFormInlineLayout/>}/>
             <Sortable>
                 {todoSubtrees}
             </Sortable>
-            <AddTodoForm parentId={'root'} formLayout={AddTodoFormInlineLayout} />
         </>
     )
 }
