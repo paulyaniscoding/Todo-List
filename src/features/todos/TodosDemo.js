@@ -174,31 +174,37 @@ export const TodosDemo = () => {
     }
 
     // Render Phase
+    const getOrganizedJSX = (organizedItms, HeadingTag) => {
+        let todosJSX = '';
+        if (typeof (organizedItms) === 'object') {
+            todosJSX = organizedItms.sortedOrganizingField.map(val => {
+                let heading = val;
+
+                // 未寫好{
+                let lowerLvContent = ;
+                organizedItms.organizedItms[val]
+                // }未寫好
+
+                return (
+                    <>
+                        <HeadingTag>{heading}</HeadingTag>
+                        <div style={{ marginBottom: '10px', }}>
+                            {lowerLvContent}
+                        </div>
+                    </>
+                )
+            })
+        } else {    // no organizing
+
+            todosJSX
+        }
+
+        return todosJSX;
+    };
     let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => ({ id, dragGroup: '' }))
     let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', 'category']);
-    let todosJSX = '';
-    if (typeof(organizedItms) ==='object' ) {
-        todosJSX = organizedItms.sortedOrganizingField.map(val => {
-            let heading = val;
+    let todosJSX = getOrganizedJSX(organizedItms, (<h1/>));
 
-            // 未寫好{
-            let lowerLvContent = ;
-            organizedItms.organizedItms[val]
-            // }未寫好
-
-            return (
-                <>
-                    <h1>{heading}</h1>
-                    <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
-                        {lowerLvContent}
-                    </div>
-                </>
-            )
-        })
-    } else {    // no organizing
-        
-        todosJSX
-    }
     //let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => {id, dragGroup: ''})
     //let todoSubtrees = treeRoots.map(
     //    (id, index) => {
