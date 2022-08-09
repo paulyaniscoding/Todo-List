@@ -28,14 +28,14 @@ const style = {
     //margin: '0 -1px -1px 0',
 }
 
-export const SortableItem = ({ id, itemParent, moveItem, children }) => {
+export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) => {
     const ref = useRef(null)
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds);
     let priority = todosEntities[id].priority;
 
     const [{ isOver, handlerId }, drop] = useDrop({
-        accept: `${ItemTypes.TODO}-${itemParent}`,
+        accept: `${ItemTypes.TODO}-~-~${dragGroup}-~-~${itemParent}`,
         collect(monitor) {
             return {
                 isOver: monitor.isOver(),
@@ -82,7 +82,7 @@ export const SortableItem = ({ id, itemParent, moveItem, children }) => {
         },
     })
     const [{ isDragging }, drag] = useDrag({
-        type: `${ItemTypes.TODO}-${itemParent}`,
+        type: `${ItemTypes.TODO}-~-~${dragGroup}-~-~${itemParent}`, //`${ItemTypes.TODO}-${itemParent}`,
         item: () => {
             return { id, priority }
         },

@@ -164,8 +164,8 @@ export const TodosDemo = () => {
         } else {
             // Sort the deepest level by 'Priority' field
             Object.keys(sortedOrganizingField).forEach(key => {
-                organizedItms[key] = organizedItms[key].sort((id1, id2) => (
-                    todosEntities[id1.id].priority - todosEntities[id2.id].priority
+                organizedItms[key] = organizedItms[key].sort((keyInfo1, keyInfo2) => (
+                    todosEntities[keyInfo1.id].priority - todosEntities[keyInfo2.id].priority
                 ))
             })
         }
@@ -174,52 +174,76 @@ export const TodosDemo = () => {
     }
 
     // Render Phase
-    const getOrganizedJSX = (organizedItms, HeadingTag) => {
+    const getOrganizedJSX = (organizedItms, lv) => {
         let todosJSX = '';
-        if (typeof (organizedItms) === 'object') {
+        if (typeof (organizedItms) === 'object') {  // Heading Wrapper
             todosJSX = organizedItms.sortedOrganizingField.map(val => {
                 let heading = val;
 
-                // 未寫好{
-                let lowerLvContent = ;
-                organizedItms.organizedItms[val]
-                // }未寫好
+                
+                const HeadingTag = ({ lv, children }) => {
+                    switch(lv) {
+                        case 1:
+                            return (<h1>{children}</h1>);
+                        case 2:
+                            return (<h2>{children}</h2>);
+                        case 3:
+                            return (<h3>{children}</h3>);
+                        case 4:
+                            return (<h4>{children}</h4>);
+                        case 5:
+                        default:
+                            return (<h5>{children}</h5>);
+                    }
+                }
+                let lowerLvContent = getOrganizedJSX(organizedItms.organizedItms[val], lv+1);
+                
+                
 
                 return (
                     <>
-                        <HeadingTag>{heading}</HeadingTag>
+                        <HeadingTag lv>{heading}</HeadingTag>
                         <div style={{ marginBottom: '10px', }}>
                             {lowerLvContent}
                         </div>
                     </>
                 )
             })
-        } else {    // no organizing
-
-            todosJSX
+        } else {    // Todo List
+            todosJSX = organizedItms.map(keyInfo => {
+                return (
+                    <TodoSubtree
+                        itmId={keyInfo.id}
+                        onDragTodo={dragTodoHandler}
+                        dragGroup={keyInfo.dragGroup}
+                        key={keyInfo.id}
+                    />
+                )
+            });
+            
         }
 
         return todosJSX;
     };
     let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => ({ id, dragGroup: '' }))
     let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', 'category']);
-    let todosJSX = getOrganizedJSX(organizedItms, (<h1/>));
+    let todosJSX = getOrganizedJSX(organizedItms, 1);
 
     //let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => {id, dragGroup: ''})
     //let todoSubtrees = treeRoots.map(
     //    (id, index) => {
     //        let category = todosEntities[id].category;
     //        return (
-                <>
-                    <h2>{category}</h2>
-                    <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
-                        <TodoSubtree
-                            itmId={id}
-                            onDragTodo={dragTodoHandler}
-                            key={id}
-                        />
-                    </div>
-                </>
+    //            <>
+    //                <h2>{category}</h2>
+    //                <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
+    //                    <TodoSubtree
+    //                        itmId={id}
+    //                        onDragTodo={dragTodoHandler}
+    //                        key={id}
+    //                    />
+    //                </div>
+    //            </>
     //        );
     //    }
     //);

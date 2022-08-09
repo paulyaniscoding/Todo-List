@@ -69,7 +69,7 @@ const StyledAddIcon = ({ clickHandler }) => {
 }
 
 // TodoEntities 要加 children field
-export const TodoSubtree = ({ itmId, onDragTodo }) => {
+export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
     let [showingAddTodoForm, setShowingAddTodoForm] = useState(false)
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
@@ -83,6 +83,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
                         <TodoSubtree
                             itmId={childId}
                             onDragTodo={onDragTodo}
+                            dragGroup
                             key={childId}
                         />
                     </div>
@@ -98,7 +99,7 @@ export const TodoSubtree = ({ itmId, onDragTodo }) => {
 
     let itemParent = todosEntities[itmId].parent;
     return (
-        <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} key={itmId}>
+        <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} dragGroup key={itmId}>
             <Collapsible parentNode={(<TodoItem todoId={itmId}  />)} collapsed={true}>
                 {todoSubtrees}
                 <AddTodoForm parentId={itmId} formLayout={<AddTodoFormInlineLayout />}/>
