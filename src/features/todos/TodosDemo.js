@@ -184,6 +184,7 @@ export const TodosDemo = () => {
 
                 
                 const HeadingTag = ({ lv, children }) => {
+                    console.log('lv:', lv)
                     switch(lv) {
                         case 1:
                             return (<h1>{children}</h1>);
@@ -204,7 +205,7 @@ export const TodosDemo = () => {
 
                 return (
                     <>
-                        <HeadingTag lv>{heading}</HeadingTag>
+                        <HeadingTag lv={lv}>{heading}</HeadingTag>
                         <div style={{ marginBottom: '10px', }}>
                             {lowerLvContent}
                         </div>
@@ -228,7 +229,7 @@ export const TodosDemo = () => {
         return todosJSX;
     };
     let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => ({ id, dragGroup: '' }))
-    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', 'category']);
+    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['category', 'year', ]);
     let todosJSX = getOrganizedJSX(organizedItms, 1);
 
     //let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => {id, dragGroup: ''})

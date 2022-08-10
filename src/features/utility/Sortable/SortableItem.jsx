@@ -29,6 +29,7 @@ const style = {
 }
 
 export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) => {
+    console.log('dragGroup:', dragGroup)
     const ref = useRef(null)
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds);
