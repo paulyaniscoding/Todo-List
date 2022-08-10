@@ -83,7 +83,7 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
                         <TodoSubtree
                             itmId={childId}
                             onDragTodo={onDragTodo}
-                            dragGroup
+                            dragGroup={dragGroup}
                             key={childId}
                         />
                     </div>
@@ -99,7 +99,7 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
 
     let itemParent = todosEntities[itmId].parent;
     return (
-        <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} dragGroup key={itmId}>
+        <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} dragGroup={dragGroup} key={itmId}>
             <Collapsible parentNode={(<TodoItem todoId={itmId}  />)} collapsed={true}>
                 {todoSubtrees}
                 <AddTodoForm parentId={itmId} formLayout={<AddTodoFormInlineLayout />}/>
