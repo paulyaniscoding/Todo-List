@@ -81,7 +81,7 @@ export const TodosDemo = () => {
                 'year': 'recordingTime',
                 'timeUsed': 'timeUsed',
             }
-            let organizingField = organizingFields(organizingCode)
+            let organizingField = organizingFields[organizingCode]
             let rawVal = todosEntities[id][organizingField];
             let organizingVal = rawVal;
             switch (organizingCode) {  // TODO: Need to adjust
@@ -106,7 +106,7 @@ export const TodosDemo = () => {
                 let organizingVal = getOrganizingVal(id, organizingCodes[0]);    // eg, curOrganizingField='date', organizingVal='2022-01-01'
                 let newDragGroup = dragGroup ? `${dragGroup}-~-~${organizingVal}` : organizingVal; // For restriction of dragging
                 prevItms[organizingVal] = prevItms[organizingVal] || [];
-                prevItms[organizingVal].push({ id, newDragGroup });
+                prevItms[organizingVal].push({ id, dragGroup: newDragGroup });
                 return prevItms;
             }, {});
 
@@ -156,14 +156,14 @@ export const TodosDemo = () => {
         }
 
         // 2.
-        if (organizingCodes.length > 0) {
+        if (organizingCodes.length > 1) {
             // Check Lower Level
-            Object.keys(sortedOrganizingField).forEach(key => {
+            sortedOrganizingField.forEach(key => {
                 organizedItms[key] = getOrganizedItmsBy(organizedItms[key].slice(0), organizingCodes.slice(1))
             })
         } else {
             // Sort the deepest level by 'Priority' field
-            Object.keys(sortedOrganizingField).forEach(key => {
+            sortedOrganizingField.forEach(key => {
                 organizedItms[key] = organizedItms[key].sort((keyInfo1, keyInfo2) => (
                     todosEntities[keyInfo1.id].priority - todosEntities[keyInfo2.id].priority
                 ))
@@ -176,7 +176,9 @@ export const TodosDemo = () => {
     // Render Phase
     const getOrganizedJSX = (organizedItms, lv) => {
         let todosJSX = '';
-        if (typeof (organizedItms) === 'object') {  // Heading Wrapper
+        if (!(Array.isArray(organizedItms))) {  // Heading Wrapper
+            console.log('organizedItms:', organizedItms);
+            console.log('organizedItms.sortedOrganizingField:', organizedItms.sortedOrganizingField);
             todosJSX = organizedItms.sortedOrganizingField.map(val => {
                 let heading = val;
 
@@ -307,7 +309,7 @@ export const TodosDemo = () => {
         <>
             <AddTodoForm parentId={'root'} formLayout={<AddTodoFormInlineLayout/>}/>
             <Sortable>
-                {todoSubtrees}
+                {todosJSX}
             </Sortable>
         </>
     )
