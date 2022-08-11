@@ -22,14 +22,16 @@ import {
 
 import { AddTodoForm } from './AddTodoForm/AddTodoForm'
 import { EditTodoFormLayout } from './AddTodoForm/EditTodoFormLayout'
+import { themeColor } from '../theme/theme';
+
 
 const StyledStartIcon = styled(MdPlayArrow)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: gray;
+    color: ${props => props.color.frame};
     :hover {
-        color: pink;
+        color: ${props => props.color.hover};
     };
 `;
 
@@ -37,9 +39,9 @@ const StyledPauseIcon = styled(MdPause)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: gray;
+    color: ${props => props.color.frame};
     :hover {
-        color: pink;
+        color: ${props => props.color.hover};
     };
 `;
 
@@ -47,41 +49,20 @@ const StyledFinishIcon = styled(MdDone)`
     width: 40px;
     height: 40px;
     cursor: pointer;
-    color: gray;
+    color: ${props => props.color.frame};
     :hover {
-        color: pink;
+        color: ${props => props.color.hover};
     };
 `;
 
-/**
-    background-color: ${props => {
-        let bgc = 'transparent';
-        switch(props.todoStatus) {
-            case 'notStarted':
-                bgc = '#ffd1cd';
-                break;
-            case 'current':
-                bgc = '#c0d6ea';
-                break;
-            case 'paused':
-                bgc = '#ffe3b7';
-                break;
-            case 'finished':
-                bgc = '#d4ebd4';
-                break;
-            default:
-                bgc = 'transparent';
-        }
-        return bgc;
-    }};
- */
 
 const StyledDiv = styled.div`
     width: max(100%, 600px);
+    background-color: ${props => props.color.background};
     display: grid;
     grid-template-columns: auto max(20vw, 200px);
     padding: 0.25rem 0.25rem;
-    border: 1px solid gray;/*rgb(177, 174, 174);*/
+    border: 1px solid ${props => props.color.frame};/*rgb(177, 174, 174);*/
     border-left: 0;
     margin: 0 -1px -1px 0; /* TODO: 負責出面layout 嘅css 應該放去出面 */
     border-radius: 0px;
@@ -213,7 +194,12 @@ export const TodoItem = ({ todoId }) => {
                     </div>
                 </div >
             ) : (
-                    <StyledDiv className="todo-item" todoStatus={todo.status} key={todoId}>
+                    <StyledDiv 
+                        className="todo-item" 
+                        todoStatus={todo.status} 
+                        color={themeColor[todo.status]}
+                        key={todoId}
+                    >
                     {!inEditMode ? (    
                         <>
                             <div className='todo-title'>
@@ -232,13 +218,22 @@ export const TodoItem = ({ todoId }) => {
 
                             <div>
                                 {(todo.status === 'notStarted' || todo.status === 'paused') && (
-                                    <StyledStartIcon onClick={(e) => onStartClicked(e, todoId)} />
+                                    <StyledStartIcon 
+                                        onClick={(e) => onStartClicked(e, todoId)} 
+                                        color={themeColor[todo.status]}
+                                    />
                                 )}
                                 {(todo.status === 'current') && (
-                                    <StyledPauseIcon onClick={(e) => onPauseClicked(e, todoId)} />
+                                    <StyledPauseIcon 
+                                        onClick={(e) => onPauseClicked(e, todoId)}
+                                        color={themeColor[todo.status]}
+                                    />
                                 )}
                                 {(todo.status !== 'finished') && (
-                                    <StyledFinishIcon onClick={(e) => onEndClicked(e, todoId)} />
+                                    <StyledFinishIcon 
+                                        onClick={(e) => onEndClicked(e, todoId)}
+                                        color={themeColor[todo.status]}                                  
+                                    />
                                 )}
                                 <span className='todo-status'>{todo.status}</span>
                             </div>
@@ -253,6 +248,7 @@ export const TodoItem = ({ todoId }) => {
                                         todoId: todoId,
                                         endEditMode: () => { toEditMode(false) },
                                     }}
+                                    layoutProps={{color: themeColor[todo.status]}}
                                 />
                             )}
                         />

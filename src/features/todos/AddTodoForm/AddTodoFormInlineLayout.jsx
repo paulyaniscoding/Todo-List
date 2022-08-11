@@ -19,9 +19,9 @@ const StyledAddIcon = styled(MdAdd)`
     height: 40px;
     font-weight: 800;
     cursor: ${props => props.disabled ? 'default' : 'pointer'};
-    color: ${props => props.disabled ? '#c0c0c0' : 'gray'};
+    color: ${props => props.disabled ? props.color.disabled : props.color.frame};
     :hover {
-        color: ${props => props.disabled ? 'c0c0c0' : 'pink'};
+        color: ${props => props.disabled ? props.color.disabled : props.color.hover};
     };
 `
 
@@ -36,6 +36,7 @@ export const AddTodoFormInlineLayout = ({
         canAdd,
         onAddTodoClicked,
     },
+    layoutProps: { color }
 }) => {
     return (
         <div style={{
@@ -51,17 +52,18 @@ export const AddTodoFormInlineLayout = ({
                 width: '7px',
                 border: 'none',
                 padding: 'none',
-                backgroundColor: 'gray',
+                backgroundColor: color.frame,
                 alignSelf: 'stretch',
                 cursor: 'default',
             }} />
             <div style={{
+                backgroundColor: color.background,
                 display: 'grid',
                 width: 'auto',
                 gridTemplateColumns: 'auto max(20vw, 200px)', //'66% 34%',
                 alignSelf: 'stretch',
                 padding: '0.25rem 0.25rem',
-                border: '1px solid gray', /*rgb(177, 174, 174)',*/
+                border: `1px solid ${color.frame}`, /*rgb(177, 174, 174)',*/
                 borderLeft: '0',
                 borderRadius: '0px',
                 cursor: 'text',
@@ -109,7 +111,11 @@ export const AddTodoFormInlineLayout = ({
                         }}
                     />
                 </div>
-                <StyledAddIcon onClick={onAddTodoClicked} disabled={!canAdd} />
+                <StyledAddIcon 
+                    onClick={onAddTodoClicked} 
+                    disabled={!canAdd} 
+                    color={color}                    
+                />
             </div>
         </div>
     );

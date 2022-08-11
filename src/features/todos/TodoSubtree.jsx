@@ -33,6 +33,7 @@ import {
     MdAddCircleOutline,
     MdAddCircle,
 } from "react-icons/md";
+import { themeColor } from '../theme/theme'
 
 const StyledNonHoveringAddIcon = styled(MdAddCircleOutline)`
     width: 40px;
@@ -73,6 +74,7 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
     let [showingAddTodoForm, setShowingAddTodoForm] = useState(false)
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
+    let todoStatus = todosEntities[itmId].status;
 
     let treeRoots = todoIds.filter(id => todosEntities[itmId].children.includes(id))
     let todoSubtrees = (
@@ -100,9 +102,9 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
     let itemParent = todosEntities[itmId].parent;
     return (
         <SortableItem id={itmId} itemParent={itemParent} moveItem={onDragTodo} dragGroup={dragGroup} key={itmId}>
-            <Collapsible parentNode={(<TodoItem todoId={itmId}  />)} collapsed={true}>
+            <Collapsible parentNode={(<TodoItem todoId={itmId} />)} collapsed={true} color={themeColor[todoStatus]}>
                 {todoSubtrees}
-                <AddTodoForm parentId={itmId} formLayout={<AddTodoFormInlineLayout />}/>
+                <AddTodoForm parentId={itmId} formLayout={<AddTodoFormInlineLayout layoutProps={{color: themeColor[todoStatus]}}/>}/>
             </Collapsible>
         </SortableItem>
     );

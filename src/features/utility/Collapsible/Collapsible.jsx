@@ -6,6 +6,7 @@ import {
     MdChevronRight,
     MdExpandMore,
 } from "react-icons/md";
+import { themeColor } from "../../theme/theme";
 
 const StyledCollapsedIcon = styled(MdChevronRight)`
     width: 40px;
@@ -39,7 +40,7 @@ const StyledCollapsibleBtn = styled.div`
     width: 7px;
     border: none;
     padding: none;
-    background-color: gray;
+    background-color: ${props => props.color.frame}; /*gray;*/
     cursor: pointer;
     grid-column: 1 / 2;
     grid-row: 1 / 3;
@@ -48,11 +49,12 @@ const StyledCollapsibleBtn = styled.div`
 `
 //background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
 
-const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
+const CollapsibleBtn = ({ isCollapsed, setIsCollapsed, color }) => {
     return (
         <StyledCollapsibleBtn
             isCollapsed={isCollapsed}
             onClick={() => setIsCollapsed(!isCollapsed)}
+            color={color}
         />
     )
 
@@ -70,7 +72,7 @@ const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
     // )
 }
 
-export function Collapsible({ parentNode, collapsed, children }) {
+export function Collapsible({ parentNode, collapsed, color, children }) {
     const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
     return (
@@ -81,15 +83,19 @@ export function Collapsible({ parentNode, collapsed, children }) {
             gap: '0',
             justifyContent: 'start',
             alignItems: 'start',
-            borderBottom: '1px solid gray',
-            borderRight: '1px solid gray',
+            borderBottom: `1px solid ${color.frame}`,
+            borderRight: `1px solid ${color.frame}`,
             margin: '0 -1px 10px 0', //'0 -1px -1px 0', /* TODO: 負責出面layout 嘅css 應該放去出面 */
         }}>
-            <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            <CollapsibleBtn 
+                isCollapsed={isCollapsed} 
+                setIsCollapsed={setIsCollapsed} 
+                color={color}
+            />
             <div style={{ 
                 display: 'flex', 
                 alignItems: 'center', 
-                height: '100%', 
+                height: '100%',
                 border: 'none', 
                 padding: 'none', 
                 girdColumn: '2 / 3', 

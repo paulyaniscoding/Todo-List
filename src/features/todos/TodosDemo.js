@@ -35,6 +35,7 @@ import {
     endTodo,
     changePriority,
 } from './todosSlice'
+import { themeColor } from '../theme/theme'
 
 export const TodosDemo = () => {
     let todos = useSelector(selectAllTodos);
@@ -304,7 +305,10 @@ export const TodosDemo = () => {
 
     return (
         <>
-            <AddTodoForm parentId={'root'} formLayout={<AddTodoFormInlineLayout/>}/>
+            <AddTodoForm 
+                parentId={'root'} 
+                formLayout={<AddTodoFormInlineLayout layoutProps={{color: themeColor.default}}/>}
+            />
             <Sortable>
                 {todosJSX}
             </Sortable>

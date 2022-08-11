@@ -26,9 +26,9 @@ const StyledUpdateIcon = styled(MdEditNote)`
     height: 40px;
     font-weight: 800;
     cursor: ${props => props.disabled ? 'default' : 'pointer'};
-    color: ${props => props.disabled ? '#c0c0c0' : 'gray'};
+    color: ${props => props.disabled ? props.color.disabled : props.color.frame};
     :hover {
-        color: ${props => props.disabled ? 'c0c0c0' : 'pink'};
+        color: ${props => props.disabled ? props.color.disabled : props.color.hover};
     };
 `
 
@@ -36,10 +36,10 @@ const StyledUndoIcon = styled(MdUndo)`
     width: 40px;
     height: 40px;
     font-weight: 800;
-    cursor: ${props => props.disabled ? 'default' : 'pointer'};
-    color: ${props => props.disabled ? '#c0c0c0' : 'gray'};
+    cursor: pointer;
+    color: ${props => props.color.frame};
     :hover {
-        color: ${props => props.disabled ? 'c0c0c0' : 'pink'};
+        color: ${props => props.color.hover};
     };
 `
 
@@ -59,6 +59,8 @@ export const EditTodoFormLayout = ({
         todoId,
         endEditMode,
     },
+
+    layoutProps: { color }
 }) => {
     return (
         <>
@@ -92,8 +94,12 @@ export const EditTodoFormLayout = ({
                         }
                     }}
                     disabled={!canUpdate}
+                    color={color}
                 />
-                <StyledUndoIcon onClick={endEditMode}/>
+                <StyledUndoIcon 
+                    onClick={endEditMode}
+                    color={color}
+                />
             </div>
         </>
     );
