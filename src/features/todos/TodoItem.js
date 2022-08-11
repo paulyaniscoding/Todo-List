@@ -94,6 +94,13 @@ export const TodoItem = ({ todoId }) => {
 
     const isDebugView = false;
 
+    const todoOutputStatus = {
+        notStarted: 'Not Started',
+        current: 'WIP',
+        paused: 'Paused',
+        finished: 'Done'
+    }
+
     const formatedTime = (time) => {
         if (time) {
             return (new Date(time)).toISOString()
@@ -234,6 +241,7 @@ export const TodoItem = ({ todoId }) => {
                                         wordWrap: 'break-word',
                                         hyphens: 'auto',
                                         cursor: 'text',
+                                        //overflow: 'hidden',
                                     }}
                                     onClick={() => { toEditMode(true) }}
                                 >
@@ -241,40 +249,60 @@ export const TodoItem = ({ todoId }) => {
                                 </div>
                             </div>
 
-                            <div>
-                                {(todo.status === 'notStarted' || todo.status === 'paused') && (
-                                    <Tooltip msg="Start">
-                                        <StyledStartIcon 
-                                            onClick={(e) => onStartClicked(e, todoId)} 
-                                            color={themeColor[todo.status]}
-                                        />
-                                    </Tooltip>
-                                )}
-                                {(todo.status === 'current') && (
-                                    <Tooltip msg="Pause">
-                                        <StyledPauseIcon 
-                                            onClick={(e) => onPauseClicked(e, todoId)}
-                                            color={themeColor[todo.status]}
-                                        />
-                                    </Tooltip>
-                                )}
-                                {(todo.status !== 'finished') && (   
-                                    <Tooltip msg="Finish">     
-                                        <StyledFinishIcon 
-                                            onClick={(e) => onEndClicked(e, todoId)}
-                                            color={themeColor[todo.status]}                                  
-                                        />   
-                                    </Tooltip>
-                                )}
-                                {(todo.status === 'finished') && (
-                                    <Tooltip msg="Recover">    
-                                        <StyledRecoverIcon 
-                                            onClick={(e) => onRecoverClicked(e, todoId)}
-                                            color={themeColor[todo.status]}                                  
-                                        />
-                                    </Tooltip>
-                                )}
-                                <span className='todo-status'>{todo.status}</span>
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: '100px auto',
+                                alignItems: 'start',
+                                justifyContent: 'space-between',
+                                height: 'fit-content',
+                            }}>
+                                <div>
+                                    {(todo.status === 'notStarted' || todo.status === 'paused') && (
+                                        <Tooltip msg="Start">
+                                            <StyledStartIcon
+                                                onClick={(e) => onStartClicked(e, todoId)}
+                                                color={themeColor[todo.status]}
+                                            />
+                                        </Tooltip>
+                                    )}
+                                    {(todo.status === 'current') && (
+                                        <Tooltip msg="Pause">
+                                            <StyledPauseIcon
+                                                onClick={(e) => onPauseClicked(e, todoId)}
+                                                color={themeColor[todo.status]}
+                                            />
+                                        </Tooltip>
+                                    )}
+                                    {(todo.status !== 'finished') && (
+                                        <Tooltip msg="Finish">
+                                            <StyledFinishIcon
+                                                onClick={(e) => onEndClicked(e, todoId)}
+                                                color={themeColor[todo.status]}
+                                            />
+                                        </Tooltip>
+                                    )}
+                                    {(todo.status === 'finished') && (
+                                        <Tooltip msg="Recover">
+                                            <StyledRecoverIcon
+                                                onClick={(e) => onRecoverClicked(e, todoId)}
+                                                color={themeColor[todo.status]}
+                                            />
+                                        </Tooltip>
+                                    )}
+                                </div>
+                                
+                                <div className='todo-status' style={{
+                                    alignSelf: 'center',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}>
+                                    <span style={{
+                                        color: themeColor[todo.status].hover,
+                                        fontSize: '20px',
+                                    }}>
+                                        {todoOutputStatus[todo.status]}
+                                    </span>
+                                </div>
                             </div>
                         </>
                     ) : (
