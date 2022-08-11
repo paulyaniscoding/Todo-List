@@ -119,6 +119,7 @@ const todosSlice = createSlice({
         startTodo: todosAdapter.upsertOne,
         pauseTodo: todosAdapter.upsertOne,
         endTodo: todosAdapter.upsertOne,
+        recoverTodo: todosAdapter.upsertOne,
         changePriority: (state, action) => {
             // slow version
             let [dragIndex, hoverIndex] = action.payload;
@@ -183,6 +184,7 @@ export const {
     startTodo, 
     pauseTodo, 
     endTodo, 
+    recoverTodo,
     changePriority,
 
     postUpdated, 

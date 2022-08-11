@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
+import ReactTooltip from 'react-tooltip';
 
 import {
     MdPlayArrow,
     MdPause,
     MdDone,
+    MdUndo,
 } from "react-icons/md";
 
 import {
@@ -18,6 +20,7 @@ import {
     startTodo,
     pauseTodo,
     endTodo,
+    recoverTodo,
 } from './todosSlice'
 
 import { AddTodoForm } from './AddTodoForm/AddTodoForm'
@@ -54,6 +57,16 @@ const StyledFinishIcon = styled(MdDone)`
         color: ${props => props.color.hover};
     };
 `;
+
+const StyledRecoverIcon = styled(MdUndo)`
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: ${props => props.color.frame};
+    :hover {
+        color: ${props => props.color.hover};
+    };
+`
 
 
 const StyledDiv = styled.div`
@@ -155,6 +168,17 @@ export const TodoItem = ({ todoId }) => {
         e.stopPropagation();
     }
 
+    const onRecoverClicked = (e, todoId) => {
+        if (todo.status === 'finished') {
+            dispatch(recoverTodo({
+                id: todoId,
+                endTime: null,
+                status: 'paused',
+            }));
+        }
+        e.stopPropagation();
+    }
+
     const getTimeUsed = (todoId) => {
         let timeUsedString = 'N/A'
         if (todo.timeUsed || todo.timeUsed === 0) {
@@ -218,20 +242,26 @@ export const TodoItem = ({ todoId }) => {
 
                             <div>
                                 {(todo.status === 'notStarted' || todo.status === 'paused') && (
-                                    <StyledStartIcon 
-                                        onClick={(e) => onStartClicked(e, todoId)} 
-                                        color={themeColor[todo.status]}
-                                    />
+                                        <StyledStartIcon 
+                                            onClick={(e) => onStartClicked(e, todoId)} 
+                                            color={themeColor[todo.status]}
+                                        />
                                 )}
                                 {(todo.status === 'current') && (
-                                    <StyledPauseIcon 
-                                        onClick={(e) => onPauseClicked(e, todoId)}
-                                        color={themeColor[todo.status]}
-                                    />
+                                        <StyledPauseIcon 
+                                            onClick={(e) => onPauseClicked(e, todoId)}
+                                            color={themeColor[todo.status]}
+                                        />
                                 )}
-                                {(todo.status !== 'finished') && (
+                                {(todo.status !== 'finished') && (        
                                     <StyledFinishIcon 
                                         onClick={(e) => onEndClicked(e, todoId)}
+                                        color={themeColor[todo.status]}                                  
+                                    />   
+                                )}
+                                {(todo.status === 'finished') && (
+                                    <StyledRecoverIcon 
+                                        onClick={(e) => onRecoverClicked(e, todoId)}
                                         color={themeColor[todo.status]}                                  
                                     />
                                 )}
