@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import styled from '@emotion/styled'
 import {css} from '@emotion/react'
 
@@ -71,7 +71,7 @@ const CollapsibleBtn = ({ isCollapsed, setIsCollapsed }) => {
 }
 
 export function Collapsible({ parentNode, collapsed, children }) {
-    const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
+    const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
     return (
         <div style={{
@@ -83,7 +83,7 @@ export function Collapsible({ parentNode, collapsed, children }) {
             alignItems: 'start',
             borderBottom: '1px solid gray',
             borderRight: '1px solid gray',
-            margin: '0 -1px -1px 0', /* TODO: 負責出面layout 嘅css 應該放去出面 */
+            margin: '0 -1px 10px 0', //'0 -1px -1px 0', /* TODO: 負責出面layout 嘅css 應該放去出面 */
         }}>
             <CollapsibleBtn isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
             <div style={{ 

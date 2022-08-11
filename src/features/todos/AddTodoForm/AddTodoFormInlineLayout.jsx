@@ -58,7 +58,7 @@ export const AddTodoFormInlineLayout = ({
             <div style={{
                 display: 'grid',
                 width: 'auto',
-                gridTemplateColumns: '66% 34%',
+                gridTemplateColumns: 'auto max(20vw, 200px)', //'66% 34%',
                 alignSelf: 'stretch',
                 padding: '0.25rem 0.25rem',
                 border: '1px solid gray', /*rgb(177, 174, 174)',*/
@@ -78,6 +78,7 @@ export const AddTodoFormInlineLayout = ({
                                 value={category} 
                                 onChange={onCategoryChanged} 
                                 style={{
+                                    width: 'min(100%, 150px)',
                                     backgroundColor: 'transparent',
                                     border: 'none',
                                     outline: 'none',

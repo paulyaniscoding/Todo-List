@@ -53,6 +53,29 @@ const StyledFinishIcon = styled(MdDone)`
     };
 `;
 
+/**
+    background-color: ${props => {
+        let bgc = 'transparent';
+        switch(props.todoStatus) {
+            case 'notStarted':
+                bgc = '#ffd1cd';
+                break;
+            case 'current':
+                bgc = '#c0d6ea';
+                break;
+            case 'paused':
+                bgc = '#ffe3b7';
+                break;
+            case 'finished':
+                bgc = '#d4ebd4';
+                break;
+            default:
+                bgc = 'transparent';
+        }
+        return bgc;
+    }};
+ */
+
 const StyledDiv = styled.div`
     width: max(100%, 600px);
     display: grid;
@@ -190,13 +213,15 @@ export const TodoItem = ({ todoId }) => {
                     </div>
                 </div >
             ) : (
-                <StyledDiv className="todo-item" key={todoId}>
+                    <StyledDiv className="todo-item" todoStatus={todo.status} key={todoId}>
                     {!inEditMode ? (    
                         <>
                             <div className='todo-title'>
                                 <div
                                     style={{
                                         width: 'fit-content',
+                                        wordWrap: 'break-word',
+                                        hyphens: 'auto',
                                         cursor: 'text',
                                     }}
                                     onClick={() => { toEditMode(true) }}
