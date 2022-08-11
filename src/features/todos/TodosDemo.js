@@ -46,25 +46,25 @@ export const TodosDemo = () => {
         dispatch(changePriority([dragIndex, hoverIndex]))
     }
     
-    // TODO: Category Sorting Output 要改, 一Category 上只可有一h2
-    let treeRoots = todoIds.filter(id => todosEntities['root'].children.includes(id))
-    let todoSubtrees = treeRoots.map(
-        (id, index) => {
-            let category = todosEntities[id].category;
-            return (
-                <>
-                    <h2>{category}</h2>
-                    <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
-                        <TodoSubtree
-                            itmId={id}
-                            onDragTodo={dragTodoHandler}
-                            key={id}
-                        />
-                    </div>
-                </>
-            );
-        }
-    );
+    // del, 2022-08-11
+    //let treeRoots = todoIds.filter(id => todosEntities['root'].children.includes(id))
+    //let todoSubtrees = treeRoots.map(
+    //    (id, index) => {
+    //        let category = todosEntities[id].category;
+    //        return (
+    //            <>
+    //                <h2>{category}</h2>
+    //                <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
+    //                    <TodoSubtree
+    //                        itmId={id}
+    //                        onDragTodo={dragTodoHandler}
+    //                        key={id}
+    //                    />
+    //                </div>
+    //            </>
+    //        );
+    //    }
+    //);
     
     // Sorting Phase
     // treeRootKeyInfos structure: [{id, dragGroup}, ...]
@@ -119,18 +119,18 @@ export const TodosDemo = () => {
                     let yr2 = date2.substring(0, 4);
 
                     if (yr1 !== yr2) {
-                        return (yr1 - yr2);
+                        return (yr2 - yr1);
                     } else {
                         let mth1 = date1.substring(5, 7);
                         let mth2 = date2.substring(5, 7);
 
                         if (mth1 !== mth2) {
-                            return (mth1 - mth2);
+                            return (mth2 - mth1);
                         } else {
                             let day1 = date1.substring(8, 10);
                             let day2 = date2.substring(8, 10);
                             
-                            return (day1 - day2);
+                            return (day2 - day1);
                         }
                     }
                 });
@@ -140,16 +140,16 @@ export const TodosDemo = () => {
                     let yr1 = date1.substring(0, 4);
                     let yr2 = date2.substring(0, 4);
                     if (yr1 !== yr2) {
-                        return (yr1 - yr2);                  
+                        return (yr2 - yr1);                  
                     } else {
                         let mth1 = date1.substring(5, 7);
                         let mth2 = date2.substring(5, 7);
-                        return (mth1 - mth2);  
+                        return (mth2 - mth1);  
                     }
                 });
                 break;
             case 'year':
-                sortedOrganizingField.sort( (yr1, yr2) => (yr1-yr2) );
+                sortedOrganizingField.sort( (yr1, yr2) => (yr2-yr1) );
                 break;
             default:
                 sortedOrganizingField.sort();            
@@ -229,7 +229,7 @@ export const TodosDemo = () => {
         return todosJSX;
     };
     let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => ({ id, dragGroup: '' }))
-    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['category', 'year', ]);
+    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', 'category', ]);
     let todosJSX = getOrganizedJSX(organizedItms, 1);
 
     //let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => {id, dragGroup: ''})
@@ -250,10 +250,6 @@ export const TodosDemo = () => {
     //        );
     //    }
     //);
-
-
-
-
 
 
     /*

@@ -54,9 +54,9 @@ const StyledFinishIcon = styled(MdDone)`
 `;
 
 const StyledDiv = styled.div`
-    width: 100%;
+    width: max(100%, 600px);
     display: grid;
-    grid-template-columns: 66% 34%;
+    grid-template-columns: auto max(20vw, 200px);
     padding: 0.25rem 0.25rem;
     border: 1px solid gray;/*rgb(177, 174, 174);*/
     border-left: 0;
@@ -204,6 +204,7 @@ export const TodoItem = ({ todoId }) => {
                                     {todo.title}
                                 </div>
                             </div>
+
                             <div>
                                 {(todo.status === 'notStarted' || todo.status === 'paused') && (
                                     <StyledStartIcon onClick={(e) => onStartClicked(e, todoId)} />
