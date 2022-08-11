@@ -7,6 +7,8 @@ import {
     MdAdd,
 } from "react-icons/md";
 
+import { Tooltip } from '../../utility/Tooltip/Tooltip';
+
 import {
     selectAllTodos,
     addTodo,
@@ -17,7 +19,7 @@ import {
 const StyledAddIcon = styled(MdAdd)`
     width: 40px;
     height: 40px;
-    font-weight: 800;
+    /*font-weight: 800;*/
     cursor: ${props => props.disabled ? 'default' : 'pointer'};
     color: ${props => props.disabled ? props.color.disabled : props.color.frame};
     :hover {
@@ -111,11 +113,15 @@ export const AddTodoFormInlineLayout = ({
                         }}
                     />
                 </div>
-                <StyledAddIcon 
-                    onClick={onAddTodoClicked} 
-                    disabled={!canAdd} 
-                    color={color}                    
-                />
+                <div>
+                    <Tooltip msg="Add">
+                        <StyledAddIcon
+                            onClick={onAddTodoClicked}
+                            disabled={!canAdd}
+                            color={color}
+                        />
+                    </Tooltip>
+                </div>
             </div>
         </div>
     );

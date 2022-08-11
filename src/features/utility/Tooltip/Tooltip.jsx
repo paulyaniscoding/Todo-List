@@ -1,25 +1,22 @@
-import { cloneElement, useState } from 'react';
-import ReactTooltip from 'react-tooltip';
+import { cloneElement } from 'react';
+import './toolTip.css'
 
-// fix "not disappearing" for ReactTooltip
-export const Tooltip = ({ tooltipId, msg, children }) => {
-    const [tooltip, showTooltip] = useState(false);
-    const childrenWifProps = cloneElement(
-        children,
-        {   
-            'data-tip': true,
-            'data-for': tooltipId,
-            'onMouseEnter': (e) => showTooltip(true),
-            'onMouseLeave': (e) => {
-                showTooltip(false);
-                setTimeout(() => showTooltip(true), 50);
-            },
-        }
-    )
+export const Tooltip = ({ msg, children }) => {
+
+    //const childrenWifProps = cloneElement(
+    //    children,
+    //    {
+    //        class: 'tooltip',
+    //        children: (<span class="tooltiptext">{msg}</span>),
+    //    }
+    //)    
     return (
-        <>
-            {tooltip && <ReactTooltip id={tooltipId} effect="solid" >{msg}</ReactTooltip>}
-            {childrenWifProps}
-        </>
-    )
+        //<div class="tooltip">Hover over me
+        //    <span class="tooltiptext">Tooltip text</span>
+        //</div>       
+        <div class="tooltip">
+            {children}
+            <span class="tooltiptext">{msg}</span>
+        </div>    
+    )    
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import ReactTooltip from 'react-tooltip';
+import { Tooltip } from '../utility/Tooltip/Tooltip';
 
 import {
     MdPlayArrow,
@@ -242,28 +243,36 @@ export const TodoItem = ({ todoId }) => {
 
                             <div>
                                 {(todo.status === 'notStarted' || todo.status === 'paused') && (
+                                    <Tooltip msg="Start">
                                         <StyledStartIcon 
                                             onClick={(e) => onStartClicked(e, todoId)} 
                                             color={themeColor[todo.status]}
                                         />
+                                    </Tooltip>
                                 )}
                                 {(todo.status === 'current') && (
+                                    <Tooltip msg="Pause">
                                         <StyledPauseIcon 
                                             onClick={(e) => onPauseClicked(e, todoId)}
                                             color={themeColor[todo.status]}
                                         />
+                                    </Tooltip>
                                 )}
-                                {(todo.status !== 'finished') && (        
-                                    <StyledFinishIcon 
-                                        onClick={(e) => onEndClicked(e, todoId)}
-                                        color={themeColor[todo.status]}                                  
-                                    />   
+                                {(todo.status !== 'finished') && (   
+                                    <Tooltip msg="Finish">     
+                                        <StyledFinishIcon 
+                                            onClick={(e) => onEndClicked(e, todoId)}
+                                            color={themeColor[todo.status]}                                  
+                                        />   
+                                    </Tooltip>
                                 )}
                                 {(todo.status === 'finished') && (
-                                    <StyledRecoverIcon 
-                                        onClick={(e) => onRecoverClicked(e, todoId)}
-                                        color={themeColor[todo.status]}                                  
-                                    />
+                                    <Tooltip msg="Recover">    
+                                        <StyledRecoverIcon 
+                                            onClick={(e) => onRecoverClicked(e, todoId)}
+                                            color={themeColor[todo.status]}                                  
+                                        />
+                                    </Tooltip>
                                 )}
                                 <span className='todo-status'>{todo.status}</span>
                             </div>

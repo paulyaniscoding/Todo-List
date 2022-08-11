@@ -8,6 +8,8 @@ import {
     MdUndo,
 } from "react-icons/md";
 
+import { Tooltip } from '../../utility/Tooltip/Tooltip';
+
 import {
     selectAllTodos,
     selectTodoEntities,
@@ -86,20 +88,24 @@ export const EditTodoFormLayout = ({
             </div>
             <div>
 
-                <StyledUpdateIcon
-                    onClick={() => {
-                        if (canUpdate) {
-                            onUpdateTodoClicked(todoId);
-                            endEditMode();
-                        }
-                    }}
-                    disabled={!canUpdate}
-                    color={color}
-                />
-                <StyledUndoIcon 
-                    onClick={endEditMode}
-                    color={color}
-                />
+                <Tooltip msg="Update">    
+                    <StyledUpdateIcon
+                        onClick={() => {
+                            if (canUpdate) {
+                                onUpdateTodoClicked(todoId);
+                                endEditMode();
+                            }
+                        }}
+                        disabled={!canUpdate}
+                        color={color}
+                    />
+                </Tooltip>
+                <Tooltip msg="Undo">  
+                    <StyledUndoIcon 
+                        onClick={endEditMode}
+                        color={color}
+                    />
+                </Tooltip>
             </div>
         </>
     );
