@@ -6,6 +6,7 @@ import {
     MdChevronRight,
     MdExpandMore,
 } from "react-icons/md";
+import { Tooltip } from "../Tooltip/Tooltip";
 import { themeColor } from "../../theme/theme";
 
 const StyledCollapsedIcon = styled(MdChevronRight)`
@@ -38,24 +39,33 @@ const CollapsibleZone = styled.div`
 
 const StyledCollapsibleBtn = styled.div`
     width: 7px;
+    height: 100%;
     border: none;
     padding: none;
     background-color: ${props => props.color.frame}; /*gray;*/
     cursor: pointer;
+    /*
     grid-column: 1 / 2;
     grid-row: 1 / 3;
     align-self: stretch;
+    */
     margin: 0 -1px -1px 0;
 `
 //background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
 
 const CollapsibleBtn = ({ isCollapsed, setIsCollapsed, color }) => {
     return (
-        <StyledCollapsibleBtn
-            isCollapsed={isCollapsed}
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            color={color}
-        />
+        <Tooltip msg={isCollapsed ? 'Expand' : 'Collapse'} style={{
+            gridColumn: '1 / 2',
+            gridRow: '1 / 3',
+            alignSelf: 'stretch',
+        }}>
+            <StyledCollapsibleBtn
+                isCollapsed={isCollapsed}
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                color={color}
+            />
+        </Tooltip>
     )
 
     // Arrow Button
