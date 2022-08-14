@@ -72,15 +72,15 @@ const StyledRecoverIcon = styled(MdUndo)`
 
 const StyledDiv = styled.div`
     width: max(100%, 600px);
-    background-color: ${props => props.color.background};
     display: grid;
     grid-template-columns: auto max(20vw, 200px);
+
+    background-color: ${props => props.color.background};
     padding: 0.25rem 0.25rem;
     border: 1px solid ${props => props.color.frame};/*rgb(177, 174, 174);*/
     border-left: 0;
     margin: 0 -1px -1px 0; /* TODO: 負責出面layout 嘅css 應該放去出面 */
     border-radius: 0px;
-    margin: 0 -1px -1px 0;
 `;
 //margin: 0 -1px -1px 0;
 //    grid-template-columns: 500px auto 100px;
@@ -234,14 +234,19 @@ export const TodoItem = ({ todoId }) => {
                     >
                     {!inEditMode ? (    
                         <>
-                            <div className='todo-title'>
+                            <div 
+                                className='todo-title' 
+                                style={{
+                                    width: 'auto',
+                                }}
+                            >
                                 <div
                                     style={{
-                                        width: 'fit-content',
+                                        width: '25vw',
                                         wordWrap: 'break-word',
                                         hyphens: 'auto',
                                         cursor: 'text',
-                                        //overflow: 'hidden',
+                                        overflowWrap: 'break-word',
                                     }}
                                     onClick={() => { toEditMode(true) }}
                                 >

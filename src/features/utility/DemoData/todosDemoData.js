@@ -398,8 +398,8 @@ const todoDemos = [
         id: '9',
         priority: 9,
         category: 'Clothing',
-        title: 'find Average Clothing',
-        content: 'find Average Clothing',
+        title: 'find Popular Clothing',
+        content: 'find Popular Clothing',
 
         parent: 'root',
         children: ['91',],

@@ -109,7 +109,7 @@ export function Collapsible({ parentNode, collapsed, color, children }) {
                 border: 'none', 
                 padding: 'none', 
                 girdColumn: '2 / 3', 
-                girdRow: '1 / 2', 
+                girdRow: '1 / 2',
             }}>    
                 {parentNode}
             </div>
