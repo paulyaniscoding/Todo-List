@@ -242,7 +242,7 @@ export const TodoItem = ({ todoId }) => {
                             >
                                 <div
                                     style={{
-                                        width: '25vw',
+                                        width: '40vw',
                                         wordWrap: 'break-word',
                                         hyphens: 'auto',
                                         cursor: 'text',

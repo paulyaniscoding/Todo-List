@@ -304,14 +304,20 @@ export const TodosDemo = () => {
     */
 
     return (
-        <>
-            <AddTodoForm 
-                parentId={'root'} 
-                formLayout={<AddTodoFormInlineLayout layoutProps={{color: themeColor.default}}/>}
-            />
-            <Sortable>
-                {todosJSX}
-            </Sortable>
-        </>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+        }}>
+            <div>
+                <h1>Todo List</h1>
+                <AddTodoForm 
+                    parentId={'root'} 
+                    formLayout={<AddTodoFormInlineLayout layoutProps={{color: themeColor.default}}/>}
+                />
+                <Sortable>
+                    {todosJSX}
+                </Sortable>
+            </div>
+        </div>
     )
 }

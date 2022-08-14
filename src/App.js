@@ -14,7 +14,6 @@ function App() {
       <Helmet>
         <title>Todo List</title>
       </Helmet>
-      <h1>Todo List</h1>
       <TodosDemo/>
       {/*<TodosList />*/}
     </>
