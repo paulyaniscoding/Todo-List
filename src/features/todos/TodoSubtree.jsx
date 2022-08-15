@@ -1,30 +1,16 @@
 import styled from '@emotion/styled'
-import {css} from '@emotion/react'
 import React, {
-    useCallback,
-    useEffect,
     useState,
 } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, } from 'react-redux'
 import { TodoItem } from './TodoItem'
 
-import { Sortable } from '../utility/Sortable/Sortable'
 import { SortableItem } from '../utility/Sortable/SortableItem'
-import { ItemTypes } from '../utility/Sortable/ItemTypes'
 import { Collapsible } from '../utility/Collapsible/Collapsible'
 
-//import '../../App.css';
-
 import {
-    selectAllTodos,
     selectTodoEntities,
-    fetchTodos,
     selectTodoIds,
-    selectTodoById,
-
-    startTodo,
-    pauseTodo,
-    endTodo,
 } from './todosSlice'
 import { AddTodoForm, } from './AddTodoForm/AddTodoForm'
 import { AddTodoFormInlineLayout, } from './AddTodoForm/AddTodoFormInlineLayout'
@@ -38,24 +24,20 @@ import { themeColor } from '../theme/theme'
 
 const TodoSubtreeLayout = styled.div`
     margin-bottom: 10px;
-`
-
+`;
 const StyledNonHoveringAddIcon = styled(MdAddCircleOutline)`
     width: 40px;
     height: 40px;
     cursor: pointer;
     color: gray;
 `;
-
 const StyledHoveringAddIcon = styled(MdAddCircle)`
     width: 40px;
     height: 40px;
     cursor: pointer;
     color: pink;
 `;
-
 const StyledAddIcon = ({ clickHandler }) => {
-
     let [isHoveringAdd, setHoverAdd] = useState(false)
     return (
         isHoveringAdd ? (
@@ -74,14 +56,10 @@ const StyledAddIcon = ({ clickHandler }) => {
     );
 }
 
-// TodoEntities 要加 children field
 export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
-    let [showingAddTodoForm, setShowingAddTodoForm] = useState(false)
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
     let todoStatus = todosEntities[itmId].status;
-
-
 
     let treeRoots = todoIds.filter(id => todosEntities[itmId].children.includes(id))
     let todoSubtrees = (
@@ -100,11 +78,6 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
             }
         )
     );
-    let addTodoZone = showingAddTodoForm ? (
-        <AddTodoForm parentId={itmId} formLayout={(<AddTodoFormInlineLayout/>)}/>
-                        ) : (
-                            <StyledAddIcon clickHandler={() => { setShowingAddTodoForm(true) }} />
-                        );
 
     let itemParent = todosEntities[itmId].parent;
     return (
@@ -115,4 +88,4 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
             </Collapsible>
         </SortableItem>
     );
-};//css={css`margin: 0 -1px -1px 0;`}
+};

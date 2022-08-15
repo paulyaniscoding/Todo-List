@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import ReactTooltip from 'react-tooltip';
 import { Tooltip } from '../utility/Tooltip/Tooltip';
 
 import {
@@ -12,12 +11,7 @@ import {
 } from "react-icons/md";
 
 import {
-    selectAllTodos,
-    selectTodoEntities,
-    fetchTodos,
-    selectTodoIds,
     selectTodoById,
-
     startTodo,
     pauseTodo,
     endTodo,
@@ -27,7 +21,6 @@ import {
 import { AddTodoForm } from './AddTodoForm/AddTodoForm'
 import { EditTodoFormLayout } from './AddTodoForm/EditTodoFormLayout'
 import { themeColor } from '../theme/theme';
-
 
 const TodoContent = styled.div`
     width: auto;
@@ -106,9 +99,6 @@ const StyledDiv = styled.div`
     margin: 0 -1px -1px 0; /* TODO: 負責出面layout 嘅css 應該放去出面 */
     border-radius: 0px;
 `;
-//margin: 0 -1px -1px 0;
-//    grid-template-columns: 500px auto 100px;
-//box-shadow: 0 1px 3px 0 #999999;
 
 export const TodoItem = ({ todoId }) => {
     const [inEditMode, toEditMode] = useState(false);
@@ -330,23 +320,4 @@ export const TodoItem = ({ todoId }) => {
             )}
         </>
     )
-
-    //return (
-    //    <div className="todo-item" key={todoId}>
-    //        <div className='todo-id'>{todoId}</div>
-    //        <div className='todo-category'>{todo.category}</div>
-    //        <div className='todo-title'>{todo.title}</div>
-    //        <div className='todo-content'>{todo.content}</div>
-//
-    //        <div className='todo-recordingTime'>{formatedTime(todo.recordingTime)}</div>
-    //        <div className='todo-expectedRequiredTime'>{`${(todo.expectedRequiredTime)} hours`}</div>
-    //        <div className='todo-startTime'>{formatedTime(todo.startTime)}</div>
-    //        <div className='todo-endTime'>{formatedTime(todo.endTime)}</div>
-    //        <div className='todo-time-used'>{getTimeUsed(todoId)}</div>
-    //        <div className='todo-status'>{todo.status}</div>
-    //        <button onClick={(e) => onStartClicked(e, todoId)}>Start</button>
-    //        <button onClick={(e) => onPauseClicked(e, todoId)}>Pause</button>
-    //        <button onClick={(e) => onEndClicked(e, todoId)}>Finish</button>
-    //    </div>
-    //)
 }

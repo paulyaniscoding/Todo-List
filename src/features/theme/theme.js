@@ -1,6 +1,6 @@
 export const themeColor = {
     default: {
-        background: 'hsl(0, 0%, 90%)', //'#ededed',
+        background: 'hsl(0, 0%, 90%)', 
         frame: 'gray',
         hover: '#474747',
         disabled: '#c0c0c0',

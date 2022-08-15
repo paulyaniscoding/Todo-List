@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, } from 'react-redux'
 import {
     useDrag,
     useDrop
@@ -9,15 +9,7 @@ import styled from '@emotion/styled'
 import { ItemTypes } from './ItemTypes'
 
 import {
-    selectAllTodos,
     selectTodoEntities,
-    fetchTodos,
-    selectTodoIds,
-    selectTodoById,
-
-    startTodo,
-    pauseTodo,
-    endTodo,
 } from '../../todos/todosSlice'
 
 
@@ -30,7 +22,6 @@ export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) 
     console.log('dragGroup:', dragGroup)
     const ref = useRef(null)
     let todosEntities = useSelector(selectTodoEntities);
-    let todoIds = useSelector(selectTodoIds);
     let priority = todosEntities[id].priority;
 
     const [{ isOver, handlerId }, drop] = useDrop({
@@ -81,7 +72,7 @@ export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) 
         },
     })
     const [{ isDragging }, drag] = useDrag({
-        type: `${ItemTypes.TODO}-~-~${dragGroup}-~-~${itemParent}`, //`${ItemTypes.TODO}-${itemParent}`,
+        type: `${ItemTypes.TODO}-~-~${dragGroup}-~-~${itemParent}`, 
         item: () => {
             return { id, priority }
         },
@@ -90,17 +81,8 @@ export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) 
         }),
     })
     const opacity = isDragging ? 0 : 1
-    // const SortableDiv = styled.div`
-    //     border: 1px dashed gray;
-    //     padding: 0.5rem 1rem;
-    //     marginBottom: .5rem;
-    //     backgroundColor: white;
-    //     cursor: move;
-    //     opacity: ${opacity};
-    // `
 
     drag(drop(ref))
-
     return (
         <SortableItemLayout ref={ref} opacity={opacity} data-handler-id={handlerId}>
             {children}

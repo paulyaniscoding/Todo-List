@@ -50,7 +50,6 @@ export const AddTodoForm = ({ parentId, defaultTitle, formLayout }) => {
         [adjustedCategory, title].every(Boolean)
     const onAddTodoClicked = () => {
         if (canAdd) {
-            //console.log('addTodo Args:', `${adjustedCategory}, ${title}, ${content}, ${requiredTime}, ${parentId}`)
             dispatch(addTodo(adjustedCategory, title, content, requiredTime, parentId));
             setCategory('');
             setTitle('');
@@ -68,41 +67,6 @@ export const AddTodoForm = ({ parentId, defaultTitle, formLayout }) => {
     }
     // } Event Handlers
 
-
-    /* 好似諗錯嘢, Commented
-    @root
-        同Category, parent=root (implement咗)
-            => 無衝突
-        同Category, parent=其他 (無implement到)
-            => 唔合理
-        唔同Category, parent = root(implement咗)
-            => 更加無衝突
-        唔同Category, parent = 其他 (無implement到)
-            => 唔合理
-        => 要整走adjusted parent
-    @inline
-        無得set category
-            parent adjust嘅話
-                => 唔合理
-        => 無留adjusted parent嘅必要
-    @edit
-        無理parent
-            => 唔洗理
-
-    // Adjust Parent Id
-    let adjustedParentId = parentId;
-    if (!isInlineForm) {
-        let existingCategories = Object.fromEntries(allTodos
-            .filter(entity => entity.parent === 'root')
-            .map(entity => {
-                return [entity.category, entity.id];
-            }
-            ));
-        let categoryExists = Object.keys(existingCategories).includes(category);
-        adjustedParentId = categoryExists ? existingCategories[category] : parentId;
-    }
-    */
-   
     const formLayoutWifFormProps = React.cloneElement(
         formLayout,
         {

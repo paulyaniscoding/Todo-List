@@ -1,13 +1,7 @@
-import update from 'immutability-helper'
-import React, { 
-    useCallback, 
-    useEffect,
-    useState,
-} from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import styled from '@emotion/styled'
-
 
 import { Sortable } from '../utility/Sortable/Sortable'
 import { TodoSubtree } from './TodoSubtree'
@@ -20,25 +14,11 @@ import {
 } from './AddTodoForm/AddTodoFormInlineLayout'
 
 import {
-    AddTodoFormLayout,
-} from './AddTodoForm/AddTodoFormLayout'
-
-//import '../../App.css';
-
-import {
-    selectAllTodos,
     selectTodoEntities,
-    fetchTodos,
     selectTodoIds,
-    selectTodoById,
-
-    startTodo,
-    pauseTodo,
-    endTodo,
     changePriority,
 } from './todosSlice'
 import { themeColor } from '../theme/theme'
-
 
 const TodoDemoLayout = styled.div`
     display: flex;
@@ -48,12 +28,7 @@ const OrganizedGroup = styled.div`
     marginBottom: 10px;
 `
 
-
-
-
-
 export const TodosDemo = () => {
-    let todos = useSelector(selectAllTodos);
     let todosEntities = useSelector(selectTodoEntities);
     let todoIds = useSelector(selectTodoIds)
     let dispatch = useDispatch();
@@ -100,7 +75,7 @@ export const TodosDemo = () => {
             .reduce( (prevItms, curId) => {
                 let {id, dragGroup} = curId;
                 let organizingVal = getOrganizingVal(id, organizingCodes[0]);    // eg, curOrganizingField='date', organizingVal='2022-01-01'
-                let newDragGroup = dragGroup ? `${dragGroup}-~-~${organizingVal}` : organizingVal; // For restriction of dragging
+                let newDragGroup = dragGroup ? `${dragGroup}-~-~${organizingVal}` : organizingVal; // For dragging restriction
                 prevItms[organizingVal] = prevItms[organizingVal] || [];
                 prevItms[organizingVal].push({ id, dragGroup: newDragGroup });
                 return prevItms;

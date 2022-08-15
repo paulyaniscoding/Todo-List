@@ -5,9 +5,9 @@ import React, {
     useRef,
 } from 'react'
 
-// *** 睇Chrome bookmark - 書籤列 - 閱讀清單 - 2022-08-04 - Textarea自動增高
+// *** Read Chrome bookmark - bookmark - readingList - 2022-08-04 - TextareaAutoExpand
 
-/* 未砌好, 要再Google
+/* Not Finished Yet, Need to Google
 export const GrowableTextarea = ({values, onChange}) => {
     let [text, setText] = useState();
     let [height, setheight] = useState();
