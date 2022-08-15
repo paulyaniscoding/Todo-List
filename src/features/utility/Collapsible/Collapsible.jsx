@@ -9,6 +9,28 @@ import {
 import { Tooltip } from "../Tooltip/Tooltip";
 import { themeColor } from "../../theme/theme";
 
+
+const CollapsibleLayout = styled.div`
+    /*width: max(100%, 500px),*/
+    display: grid;
+    grid-template-columns: 7px 1fr;
+    gap: 0;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid ${props => props.borderColor} ;
+    border-right: 1px solid ${props => props.borderColor};
+    margin: 0 -1px 10px 0; /*0 -1px -1px 0,  TODO: 負責出面layout 嘅css 應該放去出面 */  
+`
+
+const CollapsibleMainItem = styled.div`
+    display: flex; 
+    align-items: center; 
+    height: 100%;
+    border: none; 
+    padding: none; 
+    gird-column: 2 / 3; 
+    gird-row: 1 / 2;
+`
 const StyledCollapsedIcon = styled(MdChevronRight)`
     width: 40px;
     height: 40px;
@@ -31,7 +53,7 @@ const StyledExpandedIcon = styled(MdExpandMore)`
 
 const CollapsibleZone = styled.div`
     display: ${props => (props.isCollapsed?'none':'block')};
-    padding: 0 0 0 20px;
+    padding: 10px 0 0 20px;
     margin: 0px 0 0px 0;
     gird-column: 2 / 3;
     gird-row: 2 / 3;
@@ -86,41 +108,22 @@ export function Collapsible({ parentNode, collapsed, color, children }) {
     const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
     return (
-        <div style={{
-            //width: 'max(100%, 500px)',
-            display: 'grid', 
-            gridTemplateColumns: '7px 1fr',
-            gap: '0',
-            justifyContent: 'start',
-            alignItems: 'start',
-            borderBottom: `1px solid ${color.frame}`,
-            borderRight: `1px solid ${color.frame}`,
-            margin: '0 -1px 10px 0', //'0 -1px -1px 0', /* TODO: 負責出面layout 嘅css 應該放去出面 */
-        }}>
+        <CollapsibleLayout borderColor={color.frame}>
             <CollapsibleBtn 
                 isCollapsed={isCollapsed} 
                 setIsCollapsed={setIsCollapsed} 
                 color={color}
             />
-            <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                height: '100%',
-                border: 'none', 
-                padding: 'none', 
-                girdColumn: '2 / 3', 
-                girdRow: '1 / 2',
-            }}>    
+            <CollapsibleMainItem>    
                 {parentNode}
-            </div>
+            </CollapsibleMainItem>
             <CollapsibleZone
                 isCollapsed={isCollapsed}
                 // aria-expanded 是给 Screen Reader 用来 判断当前元素状态的辅助属性
                 aria-expanded={isCollapsed}
             >
-                <div style={{height: '10px'}}></div>
                 {children}
             </CollapsibleZone>
-        </div>
+        </CollapsibleLayout>
     );
 }

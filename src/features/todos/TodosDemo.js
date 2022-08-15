@@ -6,6 +6,8 @@ import React, {
 } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import styled from '@emotion/styled'
+
 
 import { Sortable } from '../utility/Sortable/Sortable'
 import { TodoSubtree } from './TodoSubtree'
@@ -37,6 +39,19 @@ import {
 } from './todosSlice'
 import { themeColor } from '../theme/theme'
 
+
+const TodoDemoLayout = styled.div`
+    display: flex;
+    justify-content: center;
+`
+const OrganizedGroup = styled.div`
+    marginBottom: 10px;
+`
+
+
+
+
+
 export const TodosDemo = () => {
     let todos = useSelector(selectAllTodos);
     let todosEntities = useSelector(selectTodoEntities);
@@ -46,27 +61,7 @@ export const TodosDemo = () => {
     let dragTodoHandler = (dragIndex, hoverIndex) => {
         dispatch(changePriority([dragIndex, hoverIndex]))
     }
-    
-    // del, 2022-08-11
-    //let treeRoots = todoIds.filter(id => todosEntities['root'].children.includes(id))
-    //let todoSubtrees = treeRoots.map(
-    //    (id, index) => {
-    //        let category = todosEntities[id].category;
-    //        return (
-    //            <>
-    //                <h2>{category}</h2>
-    //                <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
-    //                    <TodoSubtree
-    //                        itmId={id}
-    //                        onDragTodo={dragTodoHandler}
-    //                        key={id}
-    //                    />
-    //                </div>
-    //            </>
-    //        );
-    //    }
-    //);
-    
+     
     // Sorting Phase
     // treeRootKeyInfos structure: [{id, dragGroup}, ...]
     // Example: getOrganizedItmsBy([1, 5, 6, 9], ['category', 'recordingTime', 'timeUsed'])
@@ -207,12 +202,13 @@ export const TodosDemo = () => {
                 return (
                     <>
                         <HeadingTag lv={lv}>{heading}</HeadingTag>
-                        <div style={{ marginBottom: '10px', }}>
+                        <OrganizedGroup>
                             {lowerLvContent}
-                        </div>
+                        </OrganizedGroup>
                     </>
                 )
             })
+
         } else {    // Todo List
             todosJSX = organizedItms.map(keyInfo => {
                 return (
@@ -230,84 +226,12 @@ export const TodosDemo = () => {
         return todosJSX;
     };
     let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => ({ id, dragGroup: '' }))
-    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', 'category', ]);
+    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', /*'category',*/ ]);
     let todosJSX = getOrganizedJSX(organizedItms, 1);
 
-    //let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => {id, dragGroup: ''})
-    //let todoSubtrees = treeRoots.map(
-    //    (id, index) => {
-    //        let category = todosEntities[id].category;
-    //        return (
-    //            <>
-    //                <h2>{category}</h2>
-    //                <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
-    //                    <TodoSubtree
-    //                        itmId={id}
-    //                        onDragTodo={dragTodoHandler}
-    //                        key={id}
-    //                    />
-    //                </div>
-    //            </>
-    //        );
-    //    }
-    //);
-
-
-    /*
-        Sorting Logic:
-            target:
-                root => rootChildren
-
-                // from itmRoots to organized JSX
-                getOrganizedItmByCategory = (unSorted_itms=rootChildren) => {
-                    // Sorting Phase
-                    unSorted_itms => {
-                        organizedItms = {.
-                            category: [rootList],
-                        }
-                        sortedCategory = organizedItms => sortedCategory
-                        return [sortedCategory, organizedItms]
-                    }
-
-                    // Render Phase
-                    itmsOrganizedByTodoCategory = sortedCategory.map(
-                        category => {
-                            itmsUnderSameCategory = organizedItms[category]
-
-                            // Get itmJSXsUnderSameCategory
-                            init itmJSXsUnderSameCategory
-                            // Node Stage, run next sorting callback
-                            if (有下一個Sorting Callback) {
-                                (二次Sorting可以喺e個位做)
-                                (sorted_itmsUnderSameCategory = 二次SortingCallback(itmsUnderSameCategory))	
-                                (eg:)
-                                itmJSXsUnderSameCategory = getOrganizedItmByDate(itmsUnderSameCategory)
-                            } 
-                            // Leaf Stage, no next sorting callback
-                            else {
-
-                                // Render Itm						
-                                itmJSXsUnderSameCategory = itmsUnderSameCategory.map(
-                                    id => <TodoItem/>
-                                )
-                            }
-
-                            // Render Category
-                            return (
-                                <h2>
-                                    {itmJSXsUnderSameCategory}
-                                </h2>
-                            )
-                        }
-                    )
-                }        
-    */
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-        }}>
+        <TodoDemoLayout>
             <div>
                 <h1>Todo List</h1>
                 <AddTodoForm 
@@ -318,6 +242,6 @@ export const TodosDemo = () => {
                     {todosJSX}
                 </Sortable>
             </div>
-        </div>
+        </TodoDemoLayout>
     )
 }

@@ -35,6 +35,11 @@ import {
 } from "react-icons/md";
 import { themeColor } from '../theme/theme'
 
+
+const TodoSubtreeLayout = styled.div`
+    margin-bottom: 10px;
+`
+
 const StyledNonHoveringAddIcon = styled(MdAddCircleOutline)`
     width: 40px;
     height: 40px;
@@ -76,19 +81,21 @@ export const TodoSubtree = ({ itmId, onDragTodo, dragGroup }) => {
     let todoIds = useSelector(selectTodoIds)
     let todoStatus = todosEntities[itmId].status;
 
+
+
     let treeRoots = todoIds.filter(id => todosEntities[itmId].children.includes(id))
     let todoSubtrees = (
         treeRoots.map(
             (childId, index) => {
                 return (
-                    <div style={{ marginBottom: '10px',/*marginBottom: (index === (treeRoots.length - 1) ? '0' : '10px'),*/ }}>
+                    <TodoSubtreeLayout>
                         <TodoSubtree
                             itmId={childId}
                             onDragTodo={onDragTodo}
                             dragGroup={dragGroup}
                             key={childId}
                         />
-                    </div>
+                    </TodoSubtreeLayout>
                 );
             }
         )
