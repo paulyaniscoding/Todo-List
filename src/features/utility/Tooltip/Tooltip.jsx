@@ -1,7 +1,7 @@
 import { cloneElement } from 'react';
 import './toolTip.css'
 
-export const Tooltip = ({ msg, style, children }) => {
+export const Tooltip = ({ msg, childrenLayout, children }) => {
 
     //const childrenWifProps = cloneElement(
     //    children,
@@ -14,7 +14,7 @@ export const Tooltip = ({ msg, style, children }) => {
         //<div class="tooltip">Hover over me
         //    <span class="tooltiptext">Tooltip text</span>
         //</div>       
-        <div class="tooltip" style={style}>
+        <div class="tooltip" style={childrenLayout}>
             {children}
             <span class="tooltiptext">{msg}</span>
         </div>    

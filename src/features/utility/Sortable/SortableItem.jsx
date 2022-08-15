@@ -20,13 +20,11 @@ import {
     endTodo,
 } from '../../todos/todosSlice'
 
-const style = {
-    //border: '1px dashed gray',
-    //padding: '0 0px 0px 40px',//'0.5rem 1rem',
-    //marginBottom: '.5rem',
-    cursor: 'move',
-    //margin: '0 -1px -1px 0',
-}
+
+const SortableItemLayout = styled.div`
+    cursor: move;
+    opacity: ${props => props.opacity}
+`
 
 export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) => {
     console.log('dragGroup:', dragGroup)
@@ -102,9 +100,10 @@ export const SortableItem = ({ id, itemParent, moveItem, dragGroup, children }) 
     // `
 
     drag(drop(ref))
+
     return (
-        <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+        <SortableItemLayout ref={ref} opacity={opacity} data-handler-id={handlerId}>
             {children}
-        </div>
+        </SortableItemLayout>
     )
 }

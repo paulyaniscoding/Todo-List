@@ -16,6 +16,45 @@ import {
 } from '../todosSlice'
 
 
+const FakeBtn = styled.div`
+    width: 7px;
+    border: none;
+    padding: none;
+    background-color: ${props => props.color};
+    align-self: stretch;
+    cursor: default;
+`
+
+const FormContent = styled.div`         
+    background-color: ${ props => props.color.background };
+    display: grid;
+    width: auto;
+    grid-template-columns: auto max(20vw, 200px); /*66% 34%,*/
+    align-self: stretch;
+    padding: 0.25rem 0.25rem;
+    border: 1px solid ${ props => props.color.frame }; /*rgb(177, 174, 174),*/
+    border-left: 0;
+    border-radius: 0px;
+    cursor: text;
+`
+
+const CategoryLayout = styled.div`
+    margin: 0 0 5px 0;
+`
+const TodoTitleInput = styled.textarea`
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    resize: none;
+`
+const TodoCategoryInput = styled.input`
+    width: min(100%, 150px);
+    background-color: transparent;
+    border: none;
+    outline: none;
+`
 const StyledAddIcon = styled(MdAdd)`
     width: 40px;
     height: 40px;
@@ -26,7 +65,16 @@ const StyledAddIcon = styled(MdAdd)`
         color: ${props => props.disabled ? props.color.disabled : props.color.hover};
     };
 `
+const FormContainer = styled.div`  
+    display: grid;
+    grid-template-columns: 7px 1fr;
+    /*gridTemplateRows: fit-content;*/
+    gap: 0;
+    justify-content: start;
+    align-items: start;
+    margin: 0 -1px -1px 0;
 
+`
 export const AddTodoFormInlineLayout = ({
     formProps: {
         isInlineForm,
@@ -40,77 +88,34 @@ export const AddTodoFormInlineLayout = ({
     },
     layoutProps: { color }
 }) => {
+
+
     return (
-        <div style={{
-            display: 'grid',
-            gridTemplateColumns: '7px 1fr',
-            //gridTemplateRows: 'fit-content',
-            gap: '0',
-            justifyContent: 'start',
-            alignItems: 'start',
-            margin: '0 -1px -1px 0'
-        }}>
-            <div style={{
-                width: '7px',
-                border: 'none',
-                padding: 'none',
-                backgroundColor: color.frame,
-                alignSelf: 'stretch',
-                cursor: 'default',
-            }} />
-            <div style={{
-                backgroundColor: color.background,
-                display: 'grid',
-                width: 'auto',
-                gridTemplateColumns: 'auto max(20vw, 200px)', //'66% 34%',
-                alignSelf: 'stretch',
-                padding: '0.25rem 0.25rem',
-                border: `1px solid ${color.frame}`, /*rgb(177, 174, 174)',*/
-                borderLeft: '0',
-                borderRadius: '0px',
-                cursor: 'text',
-            }}>
+        <FormContainer>
+            <FakeBtn color={color.frame}/>
+            <FormContent color={color}>
                 <div>
                     {!isInlineForm && (
-                        <div style={{
-                            margin: '0 0 5px 0',
-                        }}>
-                            <input 
+                        <CategoryLayout>
+                            <TodoCategoryInput 
                                 type="text" 
                                 list="todoCategory" 
                                 placeholder="Category" 
                                 value={category} 
                                 onChange={onCategoryChanged} 
-                                style={{
-                                    width: 'min(100%, 150px)',
-                                    backgroundColor: 'transparent',
-                                    border: 'none',
-                                    outline: 'none',
-                                }}
                             />
                             <datalist 
                                 id="todoCategory"
                             >
                                 {todoCategoryOptions}
                             </datalist>
-                        </div>
+                        </CategoryLayout>
                     )}
-                    <textarea
+                    <TodoTitleInput
                         type="text"
                         placeholder='Add New Todo'
                         value={title}
                         onChange={onTitleChanged}
-                        style={{
-                            width: '100%',
-                            //cols: '10',
-                            //rows: '3',
-                            backgroundColor: 'transparent',
-                            outline: 'none',
-                            border: 'none',
-                            //height: 'fit-content',
-                            overflow: 'hidden',
-                            resize: 'none',
-                        }}
                     />
                 </div>
                 <div>
@@ -122,7 +127,7 @@ export const AddTodoFormInlineLayout = ({
                         />
                     </Tooltip>
                 </div>
-            </div>
-        </div>
+            </FormContent>
+        </FormContainer>
     );
 }

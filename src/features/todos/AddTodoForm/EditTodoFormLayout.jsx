@@ -23,6 +23,16 @@ import {
 } from '../todosSlice'
 import { useEffect } from 'react';
 
+const EditTodoArea = styled.textarea`
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    resize: none;
+    cursor: text;
+`
+
 const StyledUpdateIcon = styled(MdEditNote)`
     width: 40px;
     height: 40px;
@@ -64,26 +74,15 @@ export const EditTodoFormLayout = ({
 
     layoutProps: { color }
 }) => {
+
     return (
         <>
             <div>
-                <textarea
+                <EditTodoArea
                     type="text"
                     placeholder='Add New Todo'
                     value={title}
                     onChange={onTitleChanged}
-                    style={{
-                        width: '100%',
-                        //cols: '10',
-                        //rows: '3',
-                        backgroundColor: 'transparent',
-                        outline: 'none',
-                        border: 'none',
-                        //height: 'fit-content',
-                        overflow: 'hidden',
-                        resize: 'none',
-                        cursor: 'text',
-                    }}
                 />
             </div>
             <div>

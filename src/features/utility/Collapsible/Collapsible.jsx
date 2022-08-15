@@ -75,9 +75,16 @@ const StyledCollapsibleBtn = styled.div`
 `
 //background-color: ${props => (props.isCollapsed ? 'gray' : 'black')};
 
+// CollapsibleBtnLayout ok 
+const CollapsibleBtnLayout = styled.div`
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    align-self: stretch;
+`
+
 const CollapsibleBtn = ({ isCollapsed, setIsCollapsed, color }) => {
     return (
-        <Tooltip msg={isCollapsed ? 'Expand' : 'Collapse'} style={{
+        <Tooltip msg={isCollapsed ? 'Expand' : 'Collapse'} childrenLayout={{
             gridColumn: '1 / 2',
             gridRow: '1 / 3',
             alignSelf: 'stretch',

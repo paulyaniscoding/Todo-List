@@ -29,6 +29,30 @@ import { EditTodoFormLayout } from './AddTodoForm/EditTodoFormLayout'
 import { themeColor } from '../theme/theme';
 
 
+const TodoContent = styled.div`
+    width: auto;
+`
+const TodoTitle = styled.div`
+    width: 40vw;
+    wordW-wrap: break-word;
+    hyphens: auto;
+    cursor: text;
+    overflow-wrap: break-word;
+`
+const TodoOperation = styled.div`
+    display: grid;
+    grid-template-columns: 100px auto;
+    align-items: start;
+    justify-content: space-between;
+    height: fit-content;
+`
+const TodoStatus = styled.div`
+    align-self: center;
+    display: flex;
+    align-items: center;
+    color: ${props => props.fontColor};
+    font-size: 20px;
+`
 const StyledStartIcon = styled(MdPlayArrow)`
     width: 40px;
     height: 40px;
@@ -234,33 +258,17 @@ export const TodoItem = ({ todoId }) => {
                     >
                     {!inEditMode ? (    
                         <>
-                            <div 
+                            <TodoContent 
                                 className='todo-title' 
-                                style={{
-                                    width: 'auto',
-                                }}
                             >
-                                <div
-                                    style={{
-                                        width: '40vw',
-                                        wordWrap: 'break-word',
-                                        hyphens: 'auto',
-                                        cursor: 'text',
-                                        overflowWrap: 'break-word',
-                                    }}
+                                <TodoTitle
                                     onClick={() => { toEditMode(true) }}
                                 >
                                     {todo.title}
-                                </div>
-                            </div>
+                                </TodoTitle>
+                            </TodoContent>
 
-                            <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: '100px auto',
-                                alignItems: 'start',
-                                justifyContent: 'space-between',
-                                height: 'fit-content',
-                            }}>
+                            <TodoOperation>
                                 <div>
                                     {(todo.status === 'notStarted' || todo.status === 'paused') && (
                                         <Tooltip msg="Start">
@@ -295,20 +303,13 @@ export const TodoItem = ({ todoId }) => {
                                         </Tooltip>
                                     )}
                                 </div>
-                                
-                                <div className='todo-status' style={{
-                                    alignSelf: 'center',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                }}>
-                                    <span style={{
-                                        color: themeColor[todo.status].hover,
-                                        fontSize: '20px',
-                                    }}>
-                                        {todoOutputStatus[todo.status]}
-                                    </span>
-                                </div>
-                            </div>
+                                <TodoStatus 
+                                    className='todo-status' 
+                                    fontColor={themeColor[todo.status].hover}
+                                >                          
+                                    {todoOutputStatus[todo.status]}                            
+                                </TodoStatus>
+                            </TodoOperation>
                         </>
                     ) : (
                         <AddTodoForm 

@@ -13,7 +13,9 @@ import {
     selectTodoEntities
 } from '../todosSlice'
 
-
+const FormContainer = styled.div`
+    margin-bottom: 20px;
+`
 const StyledInput = styled.input`
     width: 500px;
     height: 20px;
@@ -39,7 +41,7 @@ export const AddTodoFormLayout = ({
     },
 }) => (
 
-    <div style={{ marginBottom: '20px' }}>
+    <FormContainer>
         {!isInlineForm && <h2>Add Todo</h2>}
         <form>
             {!isInlineForm && (
@@ -61,20 +63,10 @@ export const AddTodoFormLayout = ({
                     onChange={onTitleChanged}
                 />
 
-                {/**
-                     * TODO: 要將Title Input 變翻做Controlled Component
-                        style={{
-                            width: '500px',
-                            height: '30px',
-                            color: 'orange',
-                            backgound: 'transparent',
-                            border: 'none',
-                        }}
-                        **/}
                 <button type="button" onClick={onAddTodoClicked} disabled={!canAdd}>
                     Save
                 </button>
             </div>
         </form>
-    </div>
+    </FormContainer>
 );
