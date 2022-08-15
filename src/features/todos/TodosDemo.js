@@ -201,7 +201,7 @@ export const TodosDemo = () => {
         return todosJSX;
     };
     let treeRootKeyInfos = todoIds.filter(id => todosEntities['root'].children.includes(id)).map(id => ({ id, dragGroup: '' }))
-    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', /*'category',*/ ]);
+    let organizedItms = getOrganizedItmsBy(treeRootKeyInfos, ['day', 'category', ]);
     let todosJSX = getOrganizedJSX(organizedItms, 1);
 
 
