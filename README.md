@@ -4,8 +4,6 @@ This project is a customized todo-list for my own use. This application is imple
 
 ## How to use
 
-Run the following commands one by one:
-
-`npm install`
-
+Run the following commands one by one:<br />
+`npm install`<br />
 `npm start`
