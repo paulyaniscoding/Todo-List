@@ -45,7 +45,7 @@ Run the following commands one by one:<br />
 ### Drag to Change Priority
 Tasks of same category and same parent task can be sorted by dragging.
 
-![Drag](READMEIMG/ChangePriority_Drag.png "Drag")
+![Drag](READMEIMG/ChangePriority_Drags.png "Drag")
 ![Drop](READMEIMG/ChangePriority_Drop.png "Drop")
 ![Successful!](READMEIMG/ChangePriority_Successful.png "Successful!")
 
