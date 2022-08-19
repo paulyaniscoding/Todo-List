@@ -7,3 +7,6 @@ This project is a customized todo-list for my own use. This application is imple
 Run the following commands one by one:<br />
 `npm install`<br />
 `npm start`
+
+## Responsive Layout
+![responsive_layout](READMEIMG/responsive_layout.png "Responsive Layout")
