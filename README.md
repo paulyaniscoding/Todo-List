@@ -5,7 +5,7 @@ This project is a customized todo-list for my own use. This application is imple
 ## Demo Webpage
 https://paulyaniscoding.github.io/Todo-List/
 
-## How to use
+## Deploy in Local Environment
 
 Run the following commands one by one:<br />
 `npm install`<br />
