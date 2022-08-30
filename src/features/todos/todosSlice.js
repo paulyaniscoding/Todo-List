@@ -106,26 +106,6 @@ const todosSlice = createSlice({
             })
             todosAdapter.upsertMany(state, priorityObj);
         },
-        reactionAdded(state, action) {  
-            const { postId, reaction } = action.payload
-            const existingPost = state.entities[postId]
-            if (existingPost) {
-                existingPost.reactions[reaction]++
-            }
-        },
-        postUpdated(state, action) {
-            const { id, title, content } = action.payload
-            const existingPost = state.entities[id]
-            if (existingPost) {
-                existingPost.title = title
-                existingPost.content = content
-            }
-        },
-        postDeleted: (state, action) => {
-            state.todos = state.todos.filter(
-                post=>post.id!==action.payload
-            )
-        },
     },
 })
 
@@ -137,10 +117,6 @@ export const {
     endTodo, 
     recoverTodo,
     changePriority,
-
-    postUpdated, 
-    postDeleted, 
-    reactionAdded 
 } = todosSlice.actions
 
 export default todosSlice.reducer;
